@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -20,6 +21,8 @@ public class Driver {
     @NotBlank(message = "Name is required!")
     private String name;
 
-    @Pattern(regexp = "^(07[01245678]\\d{7})$", message = "Invalid mobile number format!")
+    @NotBlank(message = "Phone number is required!")
+    @Pattern(regexp = "^(07[01245678]\\d{7})$", message = "Invalid phone number format!")
+    @Indexed(unique = true)
     private String phoneNumber;
 }

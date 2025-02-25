@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -20,6 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "admins")
+@ToString(exclude = "password")
 public class Admin implements UserDetails {
 
     @Id
@@ -27,7 +29,7 @@ public class Admin implements UserDetails {
 
     @NotBlank(message = "Username is required!")
     @Indexed(unique = true)
-    private String userName;
+    private String username;
 
     @JsonIgnore
     @NotBlank(message = "Password is required!")
@@ -41,7 +43,7 @@ public class Admin implements UserDetails {
 
     @Override
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     @Override
@@ -62,13 +64,5 @@ public class Admin implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Admin{" +
-                "adminId='" + adminId + '\'' +
-                ", userName='" + userName + '\'' +
-                '}';
     }
 }

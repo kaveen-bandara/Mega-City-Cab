@@ -12,8 +12,9 @@ public class BookingDTO {
     private String bookingNumber;
     private String pickupLocation;
     private String dropoffLocation;
+    private LocalDateTime pickupDate;
     private LocalDateTime pickupTime;
-    private String message = "None";
+    private String message;
     private String bookingConfirmationCode;
     private CustomerDTO customer;
     private VehicleDTO vehicle;

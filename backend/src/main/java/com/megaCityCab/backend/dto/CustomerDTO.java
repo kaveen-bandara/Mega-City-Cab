@@ -11,6 +11,15 @@ import java.util.List;
 public class CustomerDTO {
 
     private String registrationNumber;
+    private String firstName;
+    private String lastName;
+    private String address;
+    private String NIC;
+    private String mobileNumber;
+    private String email;
+    private List<BookingDTO> bookingIds = new ArrayList<>();
 
-    private List<BookingDTO> bookings = new ArrayList<>();
+    public String getFullName() {
+        return firstName + " " + lastName;
+    }
 }
