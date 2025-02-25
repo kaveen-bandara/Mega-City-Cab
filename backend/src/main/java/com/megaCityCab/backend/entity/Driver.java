@@ -1,5 +1,6 @@
 package com.megaCityCab.backend.entity;
 
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,6 +17,7 @@ public class Driver {
     @Id
     private String driverId;
 
+    @NotBlank(message = "Name is required!")
     private String name;
 
     @Pattern(regexp = "^(07[01245678]\\d{7})$", message = "Invalid mobile number format!")
