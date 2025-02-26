@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 public class Booking {
 
     @Id
-    @Indexed(unique = true)
     private String bookingNumber;
 
     @NotBlank(message = "Pickup location is required!")
@@ -28,11 +27,8 @@ public class Booking {
     @NotBlank(message = "Dropoff location is required!")
     private String dropoffLocation;
 
-    @NotNull(message = "Pickup date is required!")
-    private LocalDateTime pickupDate;
-
-    @NotNull(message = "Pickup time is required!")
-    private LocalDateTime pickupTime;
+    @NotNull(message = "Pickup date and time is required!")
+    private LocalDateTime pickupDateTime;
 
     private String message = "None";
     private String bookingConfirmationCode;
