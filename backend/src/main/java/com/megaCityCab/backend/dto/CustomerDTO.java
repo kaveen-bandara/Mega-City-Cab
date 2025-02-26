@@ -17,9 +17,6 @@ public class CustomerDTO {
     private String NIC;
     private String mobileNumber;
     private String email;
-    private List<BookingDTO> bookingIds = new ArrayList<>();
 
-    public String getFullName() {
-        return firstName + " " + lastName;
-    }
+    private List<BookingDTO> bookings = new ArrayList<>();
 }

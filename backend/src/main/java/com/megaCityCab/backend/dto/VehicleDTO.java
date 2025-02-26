@@ -20,7 +20,8 @@ public class VehicleDTO {
     private String cabPhotoUrl;
     private String description;
     private BigDecimal cabFare;
-    private Boolean inWork;
+    private Boolean isActive;
+
     private String driverId;
-    private List<String> bookingIds = new ArrayList<>();
+    private List<BookingDTO> bookings;
 }

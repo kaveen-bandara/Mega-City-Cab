@@ -15,6 +15,7 @@ public class BookingDTO {
     private LocalDateTime pickupDateTime;
     private String message;
     private String bookingConfirmationCode;
+
     private CustomerDTO customer;
     private VehicleDTO vehicle;
     private DriverDTO driver;
