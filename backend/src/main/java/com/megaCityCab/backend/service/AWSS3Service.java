@@ -7,7 +7,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import lombok.Value;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +22,7 @@ public class AWSS3Service {
     private String awsS3AccessKey;
 
     @Value("${aws.s3.secret.key}")
-    private String awsS3SecreteKey;
+    private String awsS3SecretKey;
 
     public String saveImageToS3(MultipartFile photo) {
         String s3LocationImage = null;
@@ -30,7 +30,7 @@ public class AWSS3Service {
         try {
             String s3FileName = photo.getOriginalFilename();
 
-            BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsS3AccessKey, awsS3SecreteKey);
+            BasicAWSCredentials awsCredentials = new BasicAWSCredentials(awsS3AccessKey, awsS3SecretKey);
 
             AmazonS3 s3Client = AmazonS3ClientBuilder.standard()
                     .withCredentials(new AWSStaticCredentialsProvider(awsCredentials))

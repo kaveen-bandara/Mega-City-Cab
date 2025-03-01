@@ -21,7 +21,7 @@ public class VehicleDTO {
     private String description;
     private BigDecimal cabFare;
     private Boolean isActive;
-
     private String driverId;
+
     private List<BookingDTO> bookings;
 }

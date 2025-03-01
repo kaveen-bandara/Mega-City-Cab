@@ -4,6 +4,7 @@ import com.megaCityCab.backend.dto.*;
 import com.megaCityCab.backend.entity.*;
 
 import java.security.SecureRandom;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Utilities {
@@ -20,15 +21,6 @@ public class Utilities {
         }
 
         return stringBuilder.toString();
-    }
-
-    public static AdminDTO mapAdminEntityToAdminDTO(Admin admin) {
-        AdminDTO adminDTO = new AdminDTO();
-
-        adminDTO.setAdminId(admin.getAdminId());
-        adminDTO.setUsername(admin.getUsername());
-
-        return adminDTO;
     }
 
     public static CustomerDTO mapCustomerEntityToCustomerDTO(Customer customer) {
@@ -99,10 +91,61 @@ public class Utilities {
         vehicleDTO.setIsActive(vehicle.getIsActive());
         vehicleDTO.setDriverId(vehicle.getDriverId());
 
-        if (vehicle.getBookingIds() != null) {
-            vehicleDTO.setBookings(vehicle.getBookingIds().stream().map(Utilities::mapBookingEntityToBookingDTO).collect(Collectors.toList()));
+        if(vehicle.getBookings() != null) {
+            vehicleDTO.setBookings(vehicle.getBookings().stream().map(Utilities::mapBookingEntityToBookingDTO).collect(Collectors.toList()));
         }
 
         return vehicleDTO;
+    }
+
+    public static BookingDTO mapBookingEntityToBookingDTOPlusBookedVehicles(Booking booking, boolean mapUser) {
+        BookingDTO bookingDTO = new BookingDTO();
+
+        bookingDTO.setBookingNumber(booking.getBookingNumber());
+        bookingDTO.setPickupLocation(booking.getPickupLocation());
+        bookingDTO.setDropoffLocation(booking.getDropoffLocation());
+        bookingDTO.setPickupDateTime(booking.getPickupDateTime());
+        bookingDTO.setMessage(booking.getMessage());
+        bookingDTO.setBookingConfirmationCode(booking.getBookingConfirmationCode());
+
+        if(mapUser) {
+            bookingDTO.setCustomer(Utilities.mapCustomerEntityToCustomerDTO(booking.getCustomer()));
+        }
+
+        if(booking.getVehicle() != null) {
+            bookingDTO.setVehicle(mapVehicleEntityToVehicleDTO(booking.getVehicle()));
+        }
+
+        return bookingDTO;
+    }
+
+    public static CustomerDTO mapCustomerEntityToCustomerDTOPlusCustomerBookingsAndVehicle(Customer customer) {
+        CustomerDTO customerDTO = new CustomerDTO();
+
+        customerDTO.setRegistrationNumber(customer.getRegistrationNumber());
+        customerDTO.setFirstName(customer.getFirstName());
+        customerDTO.setLastName(customer.getLastName());
+        customerDTO.setAddress(customer.getAddress());
+        customerDTO.setNIC(customer.getNIC());
+        customerDTO.setMobileNumber(customer.getMobileNumber());
+        customerDTO.setEmail(customer.getEmail());
+
+        if(!customer.getBookings().isEmpty()) {
+            customerDTO.setBookings(customer.getBookings().stream().map(booking -> mapBookingEntityToBookingDTOPlusBookedVehicles(booking, false)).collect(Collectors.toList()));
+        }
+
+        return customerDTO;
+    }
+
+    public static List<CustomerDTO> mapCustomerListEntityToCustomerListDTO(List<Customer> customerList) {
+        return customerList.stream().map(Utilities::mapCustomerEntityToCustomerDTO).collect(Collectors.toList());
+    }
+
+    public static List<VehicleDTO> mapVehicleListEntityToVehicleListDTO(List<Vehicle> vehicleList) {
+        return vehicleList.stream().map(Utilities::mapVehicleEntityToVehicleDTO).collect(Collectors.toList());
+    }
+
+    public static List<BookingDTO> mapBookingListEntityToBookingListDTO(List<Booking> bookingList) {
+        return bookingList.stream().map(Utilities::mapBookingEntityToBookingDTO).collect(Collectors.toList());
     }
 }

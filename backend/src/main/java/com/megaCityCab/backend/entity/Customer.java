@@ -56,11 +56,11 @@ public class Customer implements UserDetails {
     @Size(min = 6, message = "Password must be at least 6 characters long!")
     private String password;
 
-    private List<String> bookingIds = new ArrayList<>();
+    private List<Booking> bookings = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_CUSTOMER"));
+        return List.of(new SimpleGrantedAuthority("CUSTOMER"));
     }
 
     @Override
@@ -102,7 +102,7 @@ public class Customer implements UserDetails {
                 ", NIC='" + NIC + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", email='" + email + '\'' +
-                ", bookingIds=" + bookingIds +
+                ", bookings=" + bookings +
                 '}';
     }
 }
