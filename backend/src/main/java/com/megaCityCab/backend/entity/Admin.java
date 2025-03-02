@@ -1,6 +1,5 @@
 package com.megaCityCab.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -21,19 +20,12 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Document(collection = "admins")
-@ToString(exclude = "password")
 public class Admin implements UserDetails {
 
     @Id
     private String adminId;
 
-    @NotBlank(message = "Username is required!")
-    @Indexed(unique = true)
     private String username;
-
-    @JsonIgnore
-    @NotBlank(message = "Password is required!")
-    @Size(min = 6, message = "Password must be at least 6 characters long!")
     private String password;
 
     @Override

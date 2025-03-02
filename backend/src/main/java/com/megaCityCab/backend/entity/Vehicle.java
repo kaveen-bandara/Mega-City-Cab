@@ -1,9 +1,6 @@
 package com.megaCityCab.backend.entity;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +22,10 @@ public class Vehicle {
     private String cabId;
 
     @NotNull(message = "License plate is required!")
+    @Pattern(
+            regexp = "^(?:([A-Z]{2}\\s?-?\\d{4})|([A-Z]{3}\\s?-?\\d{4}))$",
+            message = "Invalid license plate format!"
+    )
     @Indexed(unique = true)
     private String licensePlate;
 
@@ -52,10 +53,8 @@ public class Vehicle {
     @NotNull(message = "Cab fare is required!")
     private BigDecimal cabFare;
 
-    private Boolean isActive = Boolean.FALSE;
-
-    @Indexed
-    private String driverId;
+    @NotBlank(message = "Driver's name is required!")
+    private String driverName;
 
     private List<Booking> bookings = new ArrayList<>();
 }

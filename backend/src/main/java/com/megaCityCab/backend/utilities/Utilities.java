@@ -1,7 +1,11 @@
 package com.megaCityCab.backend.utilities;
 
-import com.megaCityCab.backend.dto.*;
-import com.megaCityCab.backend.entity.*;
+import com.megaCityCab.backend.dto.BookingDTO;
+import com.megaCityCab.backend.dto.CustomerDTO;
+import com.megaCityCab.backend.dto.VehicleDTO;
+import com.megaCityCab.backend.entity.Booking;
+import com.megaCityCab.backend.entity.Customer;
+import com.megaCityCab.backend.entity.Vehicle;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -30,21 +34,11 @@ public class Utilities {
         customerDTO.setFirstName(customer.getFirstName());
         customerDTO.setLastName(customer.getLastName());
         customerDTO.setAddress(customer.getAddress());
-        customerDTO.setNIC(customer.getNIC());
+        customerDTO.setNic(customer.getNic());
         customerDTO.setMobileNumber(customer.getMobileNumber());
         customerDTO.setEmail(customer.getEmail());
 
         return customerDTO;
-    }
-
-    public static DriverDTO mapDriverEntityToDriverDTO(Driver driver) {
-        DriverDTO driverDTO = new DriverDTO();
-
-        driverDTO.setDriverId(driver.getDriverId());
-        driverDTO.setName(driver.getName());
-        driverDTO.setPhoneNumber(driver.getPhoneNumber());
-
-        return driverDTO;
     }
 
     public static VehicleDTO mapVehicleEntityToVehicleDTO(Vehicle vehicle) {
@@ -58,8 +52,7 @@ public class Utilities {
         vehicleDTO.setCabPhotoUrl(vehicle.getCabPhotoUrl());
         vehicleDTO.setDescription(vehicle.getDescription());
         vehicleDTO.setCabFare(vehicle.getCabFare());
-        vehicleDTO.setIsActive(vehicle.getIsActive());
-        vehicleDTO.setDriverId(vehicle.getDriverId());
+        vehicleDTO.setDriverName(vehicle.getDriverName());
 
         return vehicleDTO;
     }
@@ -88,8 +81,7 @@ public class Utilities {
         vehicleDTO.setCabPhotoUrl(vehicle.getCabPhotoUrl());
         vehicleDTO.setDescription(vehicle.getDescription());
         vehicleDTO.setCabFare(vehicle.getCabFare());
-        vehicleDTO.setIsActive(vehicle.getIsActive());
-        vehicleDTO.setDriverId(vehicle.getDriverId());
+        vehicleDTO.setDriverName(vehicle.getDriverName());
 
         if(vehicle.getBookings() != null) {
             vehicleDTO.setBookings(vehicle.getBookings().stream().map(Utilities::mapBookingEntityToBookingDTO).collect(Collectors.toList()));
@@ -126,7 +118,7 @@ public class Utilities {
         customerDTO.setFirstName(customer.getFirstName());
         customerDTO.setLastName(customer.getLastName());
         customerDTO.setAddress(customer.getAddress());
-        customerDTO.setNIC(customer.getNIC());
+        customerDTO.setNic(customer.getNic());
         customerDTO.setMobileNumber(customer.getMobileNumber());
         customerDTO.setEmail(customer.getEmail());
 

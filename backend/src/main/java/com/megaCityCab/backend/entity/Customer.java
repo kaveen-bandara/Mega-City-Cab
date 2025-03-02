@@ -1,6 +1,5 @@
 package com.megaCityCab.backend.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
@@ -9,7 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -40,7 +38,7 @@ public class Customer implements UserDetails {
 
     @NotBlank(message = "NIC is required!")
     @Pattern(regexp = "^(\\d{9}[Vv]|\\d{12})$", message = "Invalid NIC format!")
-    private String NIC;
+    private String nic;
 
     @NotBlank(message = "Mobile number is required!")
     @Pattern(regexp = "^(07[01245678]\\d{7})$", message = "Invalid mobile number format!")
@@ -51,7 +49,6 @@ public class Customer implements UserDetails {
     @Email(message = "Invalid email format!")
     private String email;
 
-    @JsonIgnore
     @NotBlank(message = "Password is required!")
     @Size(min = 6, message = "Password must be at least 6 characters long!")
     private String password;
@@ -66,11 +63,6 @@ public class Customer implements UserDetails {
     @Override
     public String getUsername() {
         return email;
-    }
-
-    @Transient
-    public String getFullName() {
-        return firstName + " " + lastName;
     }
 
     @Override
@@ -97,9 +89,10 @@ public class Customer implements UserDetails {
     public String toString() {
         return "Customer{" +
                 "registrationNumber='" + registrationNumber + '\'' +
-                ", fullName='" + getFullName() + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
                 ", address='" + address + '\'' +
-                ", NIC='" + NIC + '\'' +
+                ", nic='" + nic + '\'' +
                 ", mobileNumber='" + mobileNumber + '\'' +
                 ", email='" + email + '\'' +
                 ", bookings=" + bookings +

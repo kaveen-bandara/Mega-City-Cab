@@ -1,7 +1,7 @@
 package com.megaCityCab.backend.service.implementation;
 
 import com.megaCityCab.backend.dto.CustomerDTO;
-import com.megaCityCab.backend.dto.LoginRequest;
+import com.megaCityCab.backend.dto.CustomerLoginRequest;
 import com.megaCityCab.backend.dto.Response;
 import com.megaCityCab.backend.entity.Customer;
 import com.megaCityCab.backend.exception.OurException;
@@ -22,13 +22,10 @@ public class CustomerService implements ICustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
-
     @Autowired
     private JWTUtilities jwtUtilities;
-
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -39,7 +36,7 @@ public class CustomerService implements ICustomerService {
 
         try {
 
-            if(customerRepository.existsByEmail(customer.getRegistrationNumber())) {
+            if(customerRepository.existsByEmail(customer.getEmail())) {
                 throw new OurException("Email already exists!");
             }
 
@@ -58,21 +55,21 @@ public class CustomerService implements ICustomerService {
 
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage( "Error while registering customer: " +e.getMessage());
+            response.setMessage("Error while registering customer: " + e.getMessage());
 
         }
         return response;
     }
 
     @Override
-    public Response login(LoginRequest loginRequest) {
+    public Response login(CustomerLoginRequest customerLoginRequest) {
 
         Response response = new Response();
 
         try {
 
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
-            var customer = customerRepository.findByEmail(loginRequest.getEmail()).orElseThrow(()-> new OurException("Customer not found!"));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(customerLoginRequest.getEmail(), customerLoginRequest.getPassword()));
+            var customer = customerRepository.findByEmail(customerLoginRequest.getEmail()).orElseThrow(()-> new OurException("Customer not found!"));
             var token = jwtUtilities.generateToken(customer);
 
             response.setStatusCode(200);
@@ -87,7 +84,7 @@ public class CustomerService implements ICustomerService {
 
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage( "Error while logging in customer: " +e.getMessage());
+            response.setMessage("Error while logging in customer: " + e.getMessage());
 
         }
         return response;
@@ -107,53 +104,7 @@ public class CustomerService implements ICustomerService {
 
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage( "Error while getting all customers: " +e.getMessage());
-
-        }
-        return response;
-    }
-
-    public Response getCustomerBookingHistory(String registrationNumber) {
-
-        Response response = new Response();
-
-        try {
-            Customer customer = customerRepository.findById(registrationNumber).orElseThrow(()-> new OurException("Customer not found!"));
-            CustomerDTO customerDTO = Utilities.mapCustomerEntityToCustomerDTOPlusCustomerBookingsAndVehicle(customer);
-            response.setStatusCode(200);
-            response.setMessage("Successfully gotten customer booking history!");
-            response.setCustomer(customerDTO);
-
-        } catch (OurException e){
-            response.setStatusCode(404);
-            response.setMessage( e.getMessage());
-
-        } catch (Exception e) {
-            response.setStatusCode(500);
-            response.setMessage( "Error while getting customer booking history: " +e.getMessage());
-
-        }
-        return response;
-    }
-
-    @Override
-    public Response deleteCustomer(String registrationNumber) {
-
-        Response response = new Response();
-
-        try {
-            customerRepository.findById(registrationNumber).orElseThrow(()-> new OurException("Customer not found!"));
-            customerRepository.deleteById(registrationNumber);
-            response.setStatusCode(200);
-            response.setMessage("successfully deleted customer!");
-
-        } catch (OurException e) {
-            response.setStatusCode(404);
-            response.setMessage(e.getMessage());
-
-        } catch (Exception e) {
-            response.setStatusCode(500);
-            response.setMessage("Error while deleting customer: " +e.getMessage());
+            response.setMessage("Error while getting all customers: " + e.getMessage());
 
         }
         return response;
@@ -178,7 +129,30 @@ public class CustomerService implements ICustomerService {
 
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Error while getting customer by id: " +e.getMessage());
+            response.setMessage("Error while getting customer by id: " + e.getMessage());
+
+        }
+        return response;
+    }
+
+    @Override
+    public Response deleteCustomer(String registrationNumber) {
+
+        Response response = new Response();
+
+        try {
+            customerRepository.findById(registrationNumber).orElseThrow(()-> new OurException("Customer not found!"));
+            customerRepository.deleteById(registrationNumber);
+            response.setStatusCode(200);
+            response.setMessage("successfully deleted customer!");
+
+        } catch (OurException e) {
+            response.setStatusCode(404);
+            response.setMessage(e.getMessage());
+
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error while deleting customer: " + e.getMessage());
 
         }
         return response;
@@ -190,11 +164,11 @@ public class CustomerService implements ICustomerService {
         Response response = new Response();
 
         try {
-            Customer customer = customerRepository.findByEmail(email).orElseThrow(()-> new OurException("User not found!"));
+            Customer customer = customerRepository.findByEmail(email).orElseThrow(()-> new OurException("Customer not found!"));
             CustomerDTO customerDTO = Utilities.mapCustomerEntityToCustomerDTO(customer);
 
             response.setStatusCode(200);
-            response.setMessage("Successfully gotten user information!");
+            response.setMessage("Successfully gotten customer information!");
             response.setCustomer(customerDTO);
 
         } catch (OurException e) {
@@ -203,7 +177,30 @@ public class CustomerService implements ICustomerService {
 
         } catch (Exception e) {
             response.setStatusCode(500);
-            response.setMessage("Error while getting customer information: " +e.getMessage());
+            response.setMessage("Error while getting customer information: " + e.getMessage());
+
+        }
+        return response;
+    }
+
+    public Response getCustomerBookingHistory(String registrationNumber) {
+
+        Response response = new Response();
+
+        try {
+            Customer customer = customerRepository.findById(registrationNumber).orElseThrow(()-> new OurException("Customer not found!"));
+            CustomerDTO customerDTO = Utilities.mapCustomerEntityToCustomerDTOPlusCustomerBookingsAndVehicle(customer);
+            response.setStatusCode(200);
+            response.setMessage("Successfully gotten customer booking history!");
+            response.setCustomer(customerDTO);
+
+        } catch (OurException e){
+            response.setStatusCode(404);
+            response.setMessage( e.getMessage());
+
+        } catch (Exception e) {
+            response.setStatusCode(500);
+            response.setMessage("Error while getting customer booking history: " + e.getMessage());
 
         }
         return response;

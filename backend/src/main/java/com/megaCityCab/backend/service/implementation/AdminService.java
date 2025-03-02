@@ -1,6 +1,6 @@
 package com.megaCityCab.backend.service.implementation;
 
-import com.megaCityCab.backend.dto.LoginRequest;
+import com.megaCityCab.backend.dto.AdminLoginRequest;
 import com.megaCityCab.backend.dto.Response;
 import com.megaCityCab.backend.exception.OurException;
 import com.megaCityCab.backend.repository.AdminRepository;
@@ -26,14 +26,14 @@ public class AdminService implements IAdminService {
     }
 
     @Override
-    public Response login(LoginRequest loginRequest) {
+    public Response login(AdminLoginRequest adminLoginRequest) {
 
         Response response = new Response();
 
         try {
 
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
-            var admin = adminRepository.findByUsername(loginRequest.getUsername()).orElseThrow(()-> new OurException("Admin not found!"));
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(adminLoginRequest.getUsername(), adminLoginRequest.getPassword()));
+            var admin = adminRepository.findByUsername(adminLoginRequest.getUsername()).orElseThrow(()-> new OurException("Admin not found!"));
             var token = jwtUtilities.generateToken(admin);
 
             response.setStatusCode(200);

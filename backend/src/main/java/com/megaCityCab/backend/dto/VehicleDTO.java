@@ -5,7 +5,6 @@ import com.megaCityCab.backend.entity.Vehicle;
 import lombok.Data;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -20,8 +19,7 @@ public class VehicleDTO {
     private String cabPhotoUrl;
     private String description;
     private BigDecimal cabFare;
-    private Boolean isActive;
-    private String driverId;
+    private String driverName;
 
     private List<BookingDTO> bookings;
 }

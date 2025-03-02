@@ -18,5 +18,4 @@ public class BookingDTO {
 
     private CustomerDTO customer;
     private VehicleDTO vehicle;
-    private DriverDTO driver;
 }

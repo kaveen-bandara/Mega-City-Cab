@@ -14,7 +14,7 @@ public class CustomerDTO {
     private String firstName;
     private String lastName;
     private String address;
-    private String NIC;
+    private String nic;
     private String mobileNumber;
     private String email;
 

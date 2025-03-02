@@ -19,10 +19,8 @@ public class Response {
 
     private CustomerDTO customer;
     private VehicleDTO vehicle;
-    private DriverDTO driver;
     private BookingDTO booking;
     private List<CustomerDTO> customerList;
     private List<VehicleDTO> vehicleList;
-    private List<DriverDTO> driverList;
     private List<BookingDTO> bookingList;
 }
