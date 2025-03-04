@@ -10,14 +10,11 @@ import java.util.List;
 public interface VehicleRepository extends MongoRepository<Vehicle, String> {
 
     @Aggregation("{ $group: { _id: '$vehicleType' } }")
-    List<VehicleTypeProjection> findDistinctVehicleType();
-
-    interface VehicleTypeProjection {
-        String getId();
-    }
+    List<String> findDistinctVehicleType();
 
     @Query("{ 'bookings': { $size: 0 } }")
     List<Vehicle> findAllAvailableVehicles();
 
-    List<Vehicle> findByVehicleTypeAndCabIdNotIn(Vehicle.VehicleType vehicleType, List<String> bookedVehicleIds);
+    @Query("{ 'vehicleType': { $regex: ?0, $options: 'i' }, 'cabId': { $nin: ?1 } }")
+    List<Vehicle> findByVehicleTypeLikeAndCabIdNotIn(String vehicleType, List<String> bookedVehicleIds);
 }

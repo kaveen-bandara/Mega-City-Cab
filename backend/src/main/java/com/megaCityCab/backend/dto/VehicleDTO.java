@@ -13,7 +13,7 @@ public class VehicleDTO {
 
     private String cabId;
     private String licensePlate;
-    private Vehicle.VehicleType vehicleType;
+    private String vehicleType;
     private String model;
     private String color;
     private String cabPhotoUrl;

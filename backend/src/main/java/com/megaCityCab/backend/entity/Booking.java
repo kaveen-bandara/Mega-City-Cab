@@ -3,6 +3,7 @@ package com.megaCityCab.backend.entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
@@ -29,8 +30,9 @@ public class Booking {
     @NotNull(message = "Pickup date and time is required!")
     private LocalDateTime pickupDateTime;
 
-    private String message = "None";
-    private String bookingConfirmationCode;
+    private String message;
+
+    private String confirmationCode;
 
     @DBRef
     private Customer customer;

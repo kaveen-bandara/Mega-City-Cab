@@ -6,24 +6,19 @@ import com.megaCityCab.backend.exception.OurException;
 import com.megaCityCab.backend.repository.AdminRepository;
 import com.megaCityCab.backend.service.connection.IAdminService;
 import com.megaCityCab.backend.utilities.JWTUtilities;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class AdminService implements IAdminService {
 
     private final AdminRepository adminRepository;
     private final JWTUtilities jwtUtilities;
     private final AuthenticationManager authenticationManager;
-
-    @Autowired
-    public AdminService(AdminRepository adminRepository, JWTUtilities jwtUtilities, AuthenticationManager authenticationManager) {
-        this.adminRepository = adminRepository;
-        this.jwtUtilities = jwtUtilities;
-        this.authenticationManager = authenticationManager;
-    }
 
     @Override
     public Response login(AdminLoginRequest adminLoginRequest) {

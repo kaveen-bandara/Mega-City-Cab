@@ -7,10 +7,16 @@ import com.megaCityCab.backend.entity.Customer;
 public interface ICustomerService {
 
     Response register(Customer customer);
+
     Response login(CustomerLoginRequest customerLoginRequest);
+
     Response getAllCustomers();
+
     Response getCustomerById(String registrationNumber);
+
     Response deleteCustomer(String registrationNumber);
+
     Response getMyInfo(String email);
+
     Response getCustomerBookingHistory(String registrationNumber);
 }

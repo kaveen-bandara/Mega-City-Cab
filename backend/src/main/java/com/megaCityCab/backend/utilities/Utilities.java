@@ -65,7 +65,7 @@ public class Utilities {
         bookingDTO.setDropoffLocation(booking.getDropoffLocation());
         bookingDTO.setPickupDateTime(booking.getPickupDateTime());
         bookingDTO.setMessage(booking.getMessage());
-        bookingDTO.setBookingConfirmationCode(booking.getBookingConfirmationCode());
+        bookingDTO.setConfirmationCode(booking.getConfirmationCode());
 
         return bookingDTO;
     }
@@ -98,7 +98,7 @@ public class Utilities {
         bookingDTO.setDropoffLocation(booking.getDropoffLocation());
         bookingDTO.setPickupDateTime(booking.getPickupDateTime());
         bookingDTO.setMessage(booking.getMessage());
-        bookingDTO.setBookingConfirmationCode(booking.getBookingConfirmationCode());
+        bookingDTO.setConfirmationCode(booking.getConfirmationCode());
 
         if(mapUser) {
             bookingDTO.setCustomer(Utilities.mapCustomerEntityToCustomerDTO(booking.getCustomer()));

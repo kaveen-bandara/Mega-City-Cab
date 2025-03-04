@@ -16,7 +16,7 @@ public class CustomerController {
     @Autowired
     private ICustomerService customerService;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> getAllCustomers() {
         Response response = customerService.getAllCustomers();

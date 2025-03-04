@@ -5,10 +5,12 @@ import com.megaCityCab.backend.dto.CustomerLoginRequest;
 import com.megaCityCab.backend.dto.Response;
 import com.megaCityCab.backend.entity.Customer;
 import com.megaCityCab.backend.exception.OurException;
+import com.megaCityCab.backend.repository.AdminRepository;
 import com.megaCityCab.backend.repository.CustomerRepository;
 import com.megaCityCab.backend.service.connection.ICustomerService;
 import com.megaCityCab.backend.utilities.JWTUtilities;
 import com.megaCityCab.backend.utilities.Utilities;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -18,16 +20,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CustomerService implements ICustomerService {
 
-    @Autowired
-    private CustomerRepository customerRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-    @Autowired
-    private JWTUtilities jwtUtilities;
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final CustomerRepository customerRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JWTUtilities jwtUtilities;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public Response register(Customer customer) {

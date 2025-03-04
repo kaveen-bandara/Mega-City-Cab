@@ -19,10 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     @Autowired
-    private ICustomerService customerService;
+    private IAdminService adminService;
 
     @Autowired
-    private IAdminService adminService;
+    private ICustomerService customerService;
+
+    @PostMapping("/admin")
+    public ResponseEntity<Response> loginAdmin(@Valid @RequestBody AdminLoginRequest adminLoginRequest) {
+        Response response = adminService.login(adminLoginRequest);
+        return ResponseEntity.status(response.getStatusCode()).body(response);
+    }
 
     @PostMapping("/register")
     public ResponseEntity<Response> register(@Valid @RequestBody Customer customer) {
@@ -33,12 +39,6 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<Response> login(@Valid @RequestBody CustomerLoginRequest customerLoginRequest) {
         Response response = customerService.login(customerLoginRequest);
-        return ResponseEntity.status(response.getStatusCode()).body(response);
-    }
-
-    @PostMapping("/admin")
-    public ResponseEntity<Response> loginAdmin(@Valid @RequestBody AdminLoginRequest adminLoginRequest) {
-        Response response = adminService.login(adminLoginRequest);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }
