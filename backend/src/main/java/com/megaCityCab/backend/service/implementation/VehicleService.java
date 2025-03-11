@@ -198,7 +198,7 @@ public class VehicleService implements IVehicleService {
         LocalDateTime endTime = pickupDateTime.plusMinutes(120);
 
         try {
-            List<Booking> bookings = bookingRepository.findBookingsByTimeRange(startTime, endTime);
+            List<Booking> bookings = bookingRepository.findBookingsByTimeRange(startTime, endTime, vehicleType);
             List<String> bookedVehicleIds = bookings.stream().map(booking -> booking.getVehicle().getCabId()).toList();
 
             List<Vehicle> availableVehicles = vehicleRepository.findByVehicleTypeLikeAndCabIdNotIn(vehicleType, bookedVehicleIds);

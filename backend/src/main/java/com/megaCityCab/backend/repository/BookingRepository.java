@@ -12,6 +12,6 @@ public interface BookingRepository extends MongoRepository<Booking, String> {
 
     Optional<Booking> findByConfirmationCode(String confirmationCode);
 
-    @Query("{ 'bookings.pickupDateTime': { $not: { $gte: ?0, $lte: ?1 } }, 'vehicleType': ?2 }")
-    List<Booking> findBookingsByTimeRange(LocalDateTime startTime, LocalDateTime endTime);
+    @Query("{ '$or': [ { 'bookings.pickupDateTime': { '$lt': ?0 } }, { 'bookings.pickupDateTime': { '$gt': ?1 } } ], 'vehicleType': ?2 }")
+    List<Booking> findBookingsByTimeRange(LocalDateTime startTime, LocalDateTime endTime, String vehicleType);
 }

@@ -2,6 +2,7 @@ package com.megaCityCab.backend.controller;
 
 import com.megaCityCab.backend.dto.Response;
 import com.megaCityCab.backend.service.connection.IVehicleService;
+import jakarta.validation.constraints.NotBlank;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -99,13 +100,7 @@ public class VehicleController {
     @GetMapping("/available-vehicles-by-datetime-and-type")
     public ResponseEntity<Response> getAvailableVehiclesByDateTimeAndVehicleType(
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime pickupDateTime,
-            @RequestParam String vehicleType) {
-        if(pickupDateTime == null || vehicleType == null || vehicleType.isBlank()) {
-            Response response = new Response();
-            response.setStatusCode(400);
-            response.setMessage("All fields are required!");
-            return ResponseEntity.status(response.getStatusCode()).body(response);
-        }
+            @RequestParam @NotBlank String vehicleType) {
 
         Response response = vehicleService.getAvailableVehiclesByDateTimeAndVehicleType(pickupDateTime, vehicleType);
         return ResponseEntity.status(response.getStatusCode()).body(response);
