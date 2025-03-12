@@ -158,7 +158,7 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public Response getMyInfo(String email) {
+    public Response getCustomerProfile(String email) {
 
         Response response = new Response();
 

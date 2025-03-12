@@ -16,7 +16,7 @@ public interface ICustomerService {
 
     Response deleteCustomer(String registrationNumber);
 
-    Response getMyInfo(String email);
+    Response getCustomerProfile(String email);
 
     Response getCustomerBookingHistory(String registrationNumber);
 }

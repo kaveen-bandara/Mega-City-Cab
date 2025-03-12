@@ -37,10 +37,10 @@ public class CustomerController {
     }
 
     @GetMapping("/profile")
-    public ResponseEntity<Response> getMyInfo() {
+    public ResponseEntity<Response> getCustomerProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String email = authentication.getName();
-        Response response = customerService.getMyInfo(email);
+        Response response = customerService.getCustomerProfile(email);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 

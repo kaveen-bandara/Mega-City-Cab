@@ -35,7 +35,7 @@ public class SecurityConfiguration {
         httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request-> request
-                        .requestMatchers("/auth/**", "/vehicles/**", "/drivers/**", "/bookings/**").permitAll()
+                        .requestMatchers("/auth/**", "/vehicle/**", "/customer/**", "/booking/**").permitAll()
                         .anyRequest().authenticated())
                 .sessionManagement(manager -> manager.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
