@@ -1,7 +1,5 @@
 package com.megaCityCab.backend.service;
 
-import com.megaCityCab.backend.repository.AdminRepository;
-import com.megaCityCab.backend.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -6,7 +6,6 @@ import com.megaCityCab.backend.entity.Booking;
 import com.megaCityCab.backend.entity.Vehicle;
 import com.megaCityCab.backend.exception.OurException;
 import com.megaCityCab.backend.repository.BookingRepository;
-import com.megaCityCab.backend.repository.CustomerRepository;
 import com.megaCityCab.backend.repository.VehicleRepository;
 import com.megaCityCab.backend.service.connection.IBookingService;
 import com.megaCityCab.backend.utilities.Utilities;

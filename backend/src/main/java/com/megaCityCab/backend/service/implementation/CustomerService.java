@@ -4,7 +4,6 @@ import com.megaCityCab.backend.dto.CustomerDTO;
 import com.megaCityCab.backend.dto.CustomerLoginRequest;
 import com.megaCityCab.backend.dto.Response;
 import com.megaCityCab.backend.exception.OurException;
-import com.megaCityCab.backend.repository.CustomerRepository;
 import com.megaCityCab.backend.service.connection.ICustomerService;
 import com.megaCityCab.backend.utilities.JWTUtilities;
 import com.megaCityCab.backend.utilities.Utilities;
