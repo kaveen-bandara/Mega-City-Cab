@@ -3,9 +3,11 @@ package com.megaCityCab.backend.service.implementation;
 import com.megaCityCab.backend.dto.BookingDTO;
 import com.megaCityCab.backend.dto.Response;
 import com.megaCityCab.backend.entity.Booking;
+import com.megaCityCab.backend.entity.User;
 import com.megaCityCab.backend.entity.Vehicle;
 import com.megaCityCab.backend.exception.OurException;
 import com.megaCityCab.backend.repository.BookingRepository;
+import com.megaCityCab.backend.repository.UserRepository;
 import com.megaCityCab.backend.repository.VehicleRepository;
 import com.megaCityCab.backend.service.connection.IBookingService;
 import com.megaCityCab.backend.utilities.Utilities;
@@ -21,16 +23,16 @@ public class BookingService implements IBookingService {
 
     private final BookingRepository bookingRepository;
     private final VehicleRepository vehicleRepository;
-    private final CustomerRepository customerRepository;
+    private final UserRepository userRepository;
 
     @Override
-    public Response saveBooking(String cabId, String registrationNumber, Booking bookingRequest) {
+    public Response saveBooking(String vehicleId, String userId, Booking bookingRequest) {
 
         Response response = new Response();
 
         try {
-            Vehicle vehicle = vehicleRepository.findById(cabId).orElseThrow(() -> new OurException("Vehicle not found!"));
-            Customer customer = customerRepository.findById(registrationNumber).orElseThrow(() -> new OurException("Customer not found!"));
+            Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(() -> new OurException("Vehicle not found!"));
+            User user = userRepository.findById(userId).orElseThrow(() -> new OurException("User not found!"));
 
             List<Booking> existingBookings = vehicle.getBookings();
             if (!vehicleIsAvailable(bookingRequest, existingBookings)) {
@@ -39,16 +41,16 @@ public class BookingService implements IBookingService {
             String confirmationCode = Utilities.generateRandomConfirmationCode(10);
 
             bookingRequest.setVehicle(vehicle);
-            bookingRequest.setCustomer(customer);
+            bookingRequest.setUser(user);
             bookingRequest.setConfirmationCode(confirmationCode);
 
             Booking savedBooking = bookingRepository.save(bookingRequest);
 
-            // Add the booking to the customer's bookings list
-            List<Booking> customerBookings = customer.getBookings();
-            customerBookings.add(savedBooking);
-            customer.setBookings(customerBookings);
-            customerRepository.save(customer);
+            // Add the booking to the user's bookings list
+            List<Booking> userBookings = user.getBookings();
+            userBookings.add(savedBooking);
+            user.setBookings(userBookings);
+            userRepository.save(user);
 
             // Add the booking to the vehicle's bookings list
             List<Booking> roomBookings = vehicle.getBookings();
@@ -115,30 +117,30 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public Response cancelBooking(String bookingNumber) {
+    public Response cancelBooking(String bookingId) {
 
         Response response = new Response();
 
         try {
-            Booking booking = bookingRepository.findById(bookingNumber).orElseThrow(() -> new OurException("Booking not found!"));
+            Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new OurException("Booking not found!"));
 
-            // Remove the booking from the associated customer
-            Customer customer = booking.getCustomer();
-            if (customer != null) {
-                customer.getBookings().removeIf(b -> b.getBookingNumber().equals(bookingNumber));
-                customerRepository.save(customer);
+            // Remove the booking from the associated user
+            User user = booking.getUser();
+            if (user != null) {
+                user.getBookings().removeIf(b -> b.getId().equals(bookingId));
+                userRepository.save(user);
             }
 
             // Remove the booking from the associated vehicle
             Vehicle vehicle = booking.getVehicle();
             if (vehicle != null) {
-                vehicle.getBookings().removeIf(b -> b.getBookingNumber().equals(bookingNumber));
+                vehicle.getBookings().removeIf(b -> b.getId().equals(bookingId));
                 vehicleRepository.save(vehicle);
             }
 
-            bookingRepository.deleteById(bookingNumber);
+            bookingRepository.deleteById(bookingId);
 
-            response.setMessage("Successfully cancelling booking!");
+            response.setMessage("Successfully canceled booking!");
             response.setStatusCode(200);
 
         } catch (OurException e) {
@@ -153,6 +155,25 @@ public class BookingService implements IBookingService {
     }
 
     private boolean vehicleIsAvailable(Booking bookingRequest, List<Booking> existingBookings) {
-        return existingBookings.stream().noneMatch(existingBooking -> bookingRequest.getPickupDateTime().equals(existingBooking.getPickupDateTime()));
+
+        return existingBookings.stream()
+                .noneMatch(existingBooking ->
+                        bookingRequest.getStartDate().equals(existingBooking.getStartDate())
+                                || bookingRequest.getEndDate().isBefore(existingBooking.getEndDate())
+                                || (bookingRequest.getStartDate().isAfter(existingBooking.getStartDate())
+                                && bookingRequest.getStartDate().isBefore(existingBooking.getEndDate()))
+                                || (bookingRequest.getStartDate().isBefore(existingBooking.getStartDate())
+
+                                && bookingRequest.getEndDate().equals(existingBooking.getEndDate()))
+                                || (bookingRequest.getStartDate().isBefore(existingBooking.getStartDate())
+
+                                && bookingRequest.getEndDate().isAfter(existingBooking.getEndDate()))
+
+                                || (bookingRequest.getStartDate().equals(existingBooking.getEndDate())
+                                && bookingRequest.getEndDate().equals(existingBooking.getStartDate()))
+
+                                || (bookingRequest.getStartDate().equals(existingBooking.getEndDate())
+                                && bookingRequest.getEndDate().equals(bookingRequest.getStartDate()))
+                );
     }
 }

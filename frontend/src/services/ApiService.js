@@ -14,61 +14,55 @@ export default class ApiService {
 
     /* AUTH */
 
-    /* admin login */
-    static async loginAdmin(adminLoginDetails) {
-        const response = await axios.post(`${this.BASE_URL}/auth/admin`, adminLoginDetails);
-        return response.data;
-    }
-
-    /* customer registration */
+    /* registration */
     static async register(registration) {
         const response = await axios.post(`${this.BASE_URL}/auth/register`, registration);
         return response.data;
     }
 
-    /* customer login */
-    static async login(customerLoginDetails) {
-        const response = await axios.post(`${this.BASE_URL}/auth/login`, customerLoginDetails);
+    /* login */
+    static async login(loginDetails) {
+        const response = await axios.post(`${this.BASE_URL}/auth/login`, loginDetails);
         return response.data;
     }
 
-    /* CUSTOMER */
+    /* USER */
 
-    /* get all customers */
-    static async getAllCustomers() {
-        const response = await axios.get(`${this.BASE_URL}/customer/all`, {
+    /* get all users */
+    static async getAllUsers() {
+        const response = await axios.get(`${this.BASE_URL}/user/all`, {
             headers: this.getHeader()
         });
         return response.data;
     }
 
-    /* get customer by id */
-    static async getCustomerById(registrationNumber) {
-        const response = await axios.get(`${this.BASE_URL}/customer/${registrationNumber}`, {
+    /* get user by id */
+    static async getUserById(userId) {
+        const response = await axios.get(`${this.BASE_URL}/user/${userId}`, {
             headers: this.getHeader()
         });
         return response.data;
     }
 
-    /* delete customer */
-    static async deleteCustomer(registrationNumber) {
-        const response = await axios.delete(`${this.BASE_URL}/customer/delete/${registrationNumber}`, {
+    /* delete user */
+    static async deleteUser(userId) {
+        const response = await axios.delete(`${this.BASE_URL}/user/delete/${userId}`, {
             headers: this.getHeader()
         });
         return response.data;
     }
 
-    /* get customer profile */
-    static async getCustomerProfile() {
-        const response = await axios.get(`${this.BASE_URL}/customer/profile`, {
+    /* get profile */
+    static async getProfile() {
+        const response = await axios.get(`${this.BASE_URL}/user/profile`, {
             headers: this.getHeader()
         });
         return response.data;
     }
 
-    /* get customer booking history */
-    static async getCustomerBookingHistory(registrationNumber) {
-        const response = await axios.get(`${this.BASE_URL}/customer/bookings/${registrationNumber}`, {
+    /* get user booking history */
+    static async getUserBookingHistory(userId) {
+        const response = await axios.get(`${this.BASE_URL}/user/bookings/${userId}`, {
             headers: this.getHeader()
         });
         return response.data;
@@ -100,22 +94,22 @@ export default class ApiService {
     }
 
     /* get vehicle by id */
-    static async getVehicleById(cabId) {
-        const result = await axios.get(`${this.BASE_URL}/vehicle/${cabId}`);
+    static async getVehicleById(vehicleId) {
+        const result = await axios.get(`${this.BASE_URL}/vehicle/${vehicleId}`);
         return result.data;
     }
 
     /* delete vehicle */
-    static async deleteVehicle(cabId) {
-        const result = await axios.delete(`${this.BASE_URL}/vehicle/delete/${cabId}`, {
+    static async deleteVehicle(vehicleId) {
+        const result = await axios.delete(`${this.BASE_URL}/vehicle/delete/${vehicleId}`, {
             headers: this.getHeader()
         });
         return result.data;
     }
 
     /* update vehicle */
-    static async updateVehicleDetails(cabId, formData) {
-        const result = await axios.put(`${this.BASE_URL}/vehicle/update/${cabId}`, formData, {
+    static async updateVehicleDetails(vehicleId, formData) {
+        const result = await axios.put(`${this.BASE_URL}/vehicle/update/${vehicleId}`, formData, {
             headers: {
                 ...this.getHeader(),
                 'Content-Type': 'multipart/form-data'
@@ -130,10 +124,10 @@ export default class ApiService {
         return result.data;
     }
 
-    /* get available vehicles by date, time and vehicle type */
-    static async getAvailableVehiclesByDateTimeAndVehicleType(pickupDateTime, vehicleType) {
+    /* get available vehicles by date and vehicle type */
+    static async getAvailableVehiclesByDateAndVehicleType(startDate, endDate, vehicleType) {
         const result = await axios.get(
-            `${this.BASE_URL}/vehicle/available-vehicles-by-datetime-and-type?pickupDateTime=${pickupDateTime}&vehicleType=${vehicleType}`
+            `${this.BASE_URL}/vehicle/available-vehicles-by-date-and-type?startDate=${startDate}&endDate=${endDate}&vehicleType=${vehicleType}`
         );
         return result.data;
     }
@@ -141,8 +135,8 @@ export default class ApiService {
     /* BOOKING */
     
     /* save new booking */
-    static async saveBooking(cabId, registrationNumber, booking) {
-        const response = await axios.post(`${this.BASE_URL}/booking/book/${cabId}/${registrationNumber}`, booking, {
+    static async saveBooking(vehicleId, userId, booking) {
+        const response = await axios.post(`${this.BASE_URL}/booking/book/${vehicleId}/${userId}`, booking, {
             headers: this.getHeader()
         });
         return response.data;
@@ -163,8 +157,8 @@ export default class ApiService {
     }
 
     /* cancel booking */
-    static async cancelBooking(bookingNumber) {
-        const result = await axios.delete(`${this.BASE_URL}/booking/cancel/${bookingNumber}`, {
+    static async cancelBooking(bookingId) {
+        const result = await axios.delete(`${this.BASE_URL}/booking/cancel/${bookingId}`, {
             headers: this.getHeader()
         });
         return result.data;

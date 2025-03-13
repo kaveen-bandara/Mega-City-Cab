@@ -8,15 +8,13 @@ import java.util.List;
 
 @Data
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CustomerDTO {
+public class UserDTO {
 
-    private String registrationNumber;
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String nic;
-    private String mobileNumber;
+    private String id;
+    private String name;
     private String email;
+    private String mobileNumber;
+    private String role;
 
     private List<BookingDTO> bookings = new ArrayList<>();
 }

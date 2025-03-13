@@ -4,24 +4,24 @@ import com.megaCityCab.backend.dto.Response;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IVehicleService {
 
-    Response addNewVehicle(MultipartFile photo, String licensePlate, String vehicleType, String model, String color, String description, BigDecimal cabFare, String driverName);
+    Response addNewVehicle(MultipartFile photo, String licensePlate, String vehicleType, String model, String color, String description, BigDecimal fare, String driverName);
 
     List<String> getAllVehicleTypes();
 
     Response getAllVehicles();
 
-    Response getVehicleById(String cabId);
+    Response getVehicleById(String vehicleId);
 
-    Response deleteVehicle(String cabId);
+    Response deleteVehicle(String vehicleId);
 
-    Response updateVehicleDetails(String cabId, String licensePlate, String vehicleType, String model, String color, String description, BigDecimal cabFare, String driverName, MultipartFile photo);
+    Response updateVehicleDetails(String vehicleId, String licensePlate, String vehicleType, String model, String color, String description, BigDecimal fare, String driverName, MultipartFile photo);
 
     Response getAllAvailableVehicles();
 
-    Response getAvailableVehiclesByDateTimeAndVehicleType(LocalDateTime pickupDateTime, String vehicleType);
+    Response getAvailableVehiclesByDateAndVehicleType(LocalDate startDate, LocalDate endDate, String vehicleType);
 }

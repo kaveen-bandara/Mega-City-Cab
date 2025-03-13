@@ -17,10 +17,10 @@ public class Response {
     private String expirationTime;
     private String bookingConfirmationCode;
 
-    private CustomerDTO customer;
+    private UserDTO user;
     private VehicleDTO vehicle;
     private BookingDTO booking;
-    private List<CustomerDTO> customerList;
+    private List<UserDTO> userList;
     private List<VehicleDTO> vehicleList;
     private List<BookingDTO> bookingList;
 }

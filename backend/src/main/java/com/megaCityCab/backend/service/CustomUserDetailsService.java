@@ -1,5 +1,6 @@
 package com.megaCityCab.backend.service;
 
+import com.megaCityCab.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -12,24 +13,10 @@ import java.util.Optional;
 public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
-    private AdminRepository adminRepository;
-
-    @Autowired
-    private CustomerRepository customerRepository;
+    private UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
-        Optional<Admin> admin = adminRepository.findByUsername(username);
-        if(admin.isPresent()) {
-            return admin.get();
-        }
-
-        Optional<Customer> customer = customerRepository.findByEmail(username);
-        if(customer.isPresent()) {
-            return customer.get();
-        }
-
-        throw new UsernameNotFoundException("User not found!");
+        return userRepository.findByEmail(username).orElseThrow(()-> new UsernameNotFoundException("User not found"));
     }
 }

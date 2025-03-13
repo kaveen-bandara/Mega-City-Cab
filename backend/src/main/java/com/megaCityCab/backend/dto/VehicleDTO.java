@@ -11,14 +11,14 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class VehicleDTO {
 
-    private String cabId;
+    private String id;
     private String licensePlate;
     private String vehicleType;
     private String model;
     private String color;
-    private String cabPhotoUrl;
+    private String vehiclePhotoUrl;
     private String description;
-    private BigDecimal cabFare;
+    private BigDecimal fare;
     private String driverName;
 
     private List<BookingDTO> bookings;

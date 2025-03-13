@@ -16,13 +16,13 @@ public class BookingController {
     @Autowired
     private IBookingService bookingService;
 
-    @PostMapping("/book/{cabId}/{registrationNumber}")
+    @PostMapping("/book/{vehicleId}/{userId}")
     @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('CUSTOMER')")
     public ResponseEntity<Response> saveBooking(
-            @PathVariable String cabId,
-            @PathVariable String registrationNumber,
+            @PathVariable String vehicleId,
+            @PathVariable String userId,
             @Valid @RequestBody Booking bookingRequest) {
-        Response response = bookingService.saveBooking(cabId, registrationNumber, bookingRequest);
+        Response response = bookingService.saveBooking(vehicleId, userId, bookingRequest);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
@@ -39,10 +39,10 @@ public class BookingController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @DeleteMapping("/cancel/{bookingNumber}")
+    @DeleteMapping("/cancel/{bookingId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> cancelBooking(@PathVariable String bookingNumber) {
-        Response response = bookingService.cancelBooking(bookingNumber);
+    public ResponseEntity<Response> cancelBooking(@PathVariable String bookingId) {
+        Response response = bookingService.cancelBooking(bookingId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }

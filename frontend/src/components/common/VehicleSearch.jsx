@@ -6,23 +6,22 @@ import ApiService from '../../service/ApiService';
 const VehicleSearch = ({ handleSearchResult }) => {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
-  const [roomType, setRoomType] = useState('');
-  const [roomTypes, setRoomTypes] = useState([]);
+  const [vehicleType, setVehicleType] = useState('');
+  const [vehicleTypes, setVehicleTypes] = useState([]);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchRoomTypes = async () => {
+    const fetchVehicleTypes = async () => {
       try {
-        const types = await ApiService.getRoomTypes();
-        setRoomTypes(types);
+        const types = await ApiService.getAllVehicleTypes();
+        setVehicleTypes(types);
       } catch (error) {
-        console.error('Error fetching room types:', error.message);
+        console.error("Error fetching vehicle types: ", error.message);
       }
     };
-    fetchRoomTypes();
+    fetchVehicleTypes();
   }, []);
 
-  /**This methods is going to be used to show errors */
   const showError = (message, timeout = 5000) => {
     setError(message);
     setTimeout(() => {
@@ -30,26 +29,22 @@ const VehicleSearch = ({ handleSearchResult }) => {
     }, timeout);
   };
 
-  /**THis is going to be used to fetch avaailabe rooms from database base on seach data that'll be passed in */
   const handleInternalSearch = async () => {
-    if (!startDate || !endDate || !roomType) {
-      showError('Please select all fields');
+    if (!startDate || !endDate || !vehicleType) {
+      showError("Please select all fields!");
       return false;
     }
     try {
-      // Convert startDate to the desired format
       const formattedStartDate = startDate ? startDate.toISOString().split('T')[0] : null;
       const formattedEndDate = endDate ? endDate.toISOString().split('T')[0] : null;
-      // Call the API to fetch available rooms
-      const response = await ApiService.getAvailableRoomsByDateAndType(formattedStartDate, formattedEndDate, roomType);
+      const response = await ApiService.getAvailableVehiclesByDateAndVehicleType(formattedStartDate, formattedEndDate, vehicleType);
 
-      // Check if the response is successful
       if (response.statusCode === 200) {
-        if (response.roomList.length === 0) {
-          showError('Room not currently available for this date range on the selected rom type.');
+        if (response.vehicleList.length === 0) {
+          showError('Vehicle is currently unavailable for this date range on the selected vehicle type!');
           return
         }
-        handleSearchResult(response.roomList);
+        handleSearchResult(response.vehicleList);
         setError('');
       }
     } catch (error) {
@@ -59,44 +54,44 @@ const VehicleSearch = ({ handleSearchResult }) => {
 
   return (
     <section>
-      <div className="search-container">
-        <div className="search-field">
-          <label>Check-in Date</label>
+      <div className='search-container'>
+        <div className='search-field'>
+          <label>Start Date</label>
           <DatePicker
             selected={startDate}
             onChange={(date) => setStartDate(date)}
-            dateFormat="dd/MM/yyyy"
-            placeholderText="Select Check-in Date"
+            dateFormat='dd/MM/yyyy'
+            placeholderText="Select Start Date"
           />
         </div>
-        <div className="search-field">
-          <label>Check-out Date</label>
+        <div className='search-field'>
+          <label>End Date</label>
           <DatePicker
             selected={endDate}
             onChange={(date) => setEndDate(date)}
-            dateFormat="dd/MM/yyyy"
-            placeholderText="Select Check-out Date"
+            dateFormat='dd/MM/yyyy'
+            placeholderText='Select End Date'
           />
         </div>
 
-        <div className="search-field">
-          <label>Room Type</label>
-          <select value={roomType} onChange={(e) => setRoomType(e.target.value)}>
+        <div className='search-field'>
+          <label>Vehicle Type</label>
+          <select value={vehicleType} onChange={(e) => setVehicleType(e.target.value)}>
             <option disabled value="">
-              Select Room Type
+              Select vehicle Type
             </option>
-            {roomTypes.map((roomType) => (
-              <option key={roomType} value={roomType}>
-                {roomType}
+            {vehicleTypes.map((vehicleType) => (
+              <option key={vehicleType} value={vehicleType}>
+                {vehicleType}
               </option>
             ))}
           </select>
         </div>
-        <button className="home-search-button" onClick={handleInternalSearch}>
-          Search Rooms
+        <button className='home-search-button' onClick={handleInternalSearch}>
+          Search vehicles
         </button>
       </div>
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className='error-message'>{error}</p>}
     </section>
   );
 };

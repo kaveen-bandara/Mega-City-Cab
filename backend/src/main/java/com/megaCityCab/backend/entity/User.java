@@ -40,7 +40,6 @@ public class User implements UserDetails {
     @Size(min = 6, message = "Password must be at least 6 characters long!")
     private String password;
 
-    @NotBlank(message = "Role is required!")
     private String role;
 
     @DBRef

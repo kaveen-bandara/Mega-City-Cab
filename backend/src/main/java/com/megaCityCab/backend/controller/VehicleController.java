@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -30,7 +30,7 @@ public class VehicleController {
             @RequestParam("model") String model,
             @RequestParam("color") String color,
             @RequestParam("description") String description,
-            @RequestParam("cabFare") BigDecimal cabFare,
+            @RequestParam("fare") BigDecimal fare,
             @RequestParam("driverName") String driverName) {
 
         if(photo == null || photo.isEmpty()
@@ -39,7 +39,7 @@ public class VehicleController {
                 || model == null || model.isBlank()
                 || color == null || color.isBlank()
                 || description == null || description.isBlank()
-                || cabFare == null || cabFare.compareTo(BigDecimal.ZERO) <= 0
+                || fare == null || fare.compareTo(BigDecimal.ZERO) <= 0
                 || driverName == null || driverName.isBlank()) {
             Response response = new Response();
             response.setStatusCode(400);
@@ -47,7 +47,7 @@ public class VehicleController {
             return ResponseEntity.status(response.getStatusCode()).body(response);
         }
 
-        Response response = vehicleService.addNewVehicle(photo, licensePlate, vehicleType, model, color, description, cabFare, driverName);
+        Response response = vehicleService.addNewVehicle(photo, licensePlate, vehicleType, model, color, description, fare, driverName);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
@@ -62,32 +62,32 @@ public class VehicleController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @GetMapping("/{cabId}")
-    public ResponseEntity<Response> getVehicleById(@PathVariable("cabId") String cabId) {
-        Response response = vehicleService.getVehicleById(cabId);
+    @GetMapping("/{vehicleId}")
+    public ResponseEntity<Response> getVehicleById(@PathVariable("vehicleId") String vehicleId) {
+        Response response = vehicleService.getVehicleById(vehicleId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @DeleteMapping("/delete/{cabId}")
+    @DeleteMapping("/delete/{vehicleId}")
     @PreAuthorize("hasAuthority('ADMIN')")
-    public ResponseEntity<Response> deleteVehicle(@PathVariable String cabId) {
-        Response response = vehicleService.deleteVehicle(cabId);
+    public ResponseEntity<Response> deleteVehicle(@PathVariable String vehicleId) {
+        Response response = vehicleService.deleteVehicle(vehicleId);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @PutMapping("/update/{cabId}")
+    @PutMapping("/update/{vehicleId}")
     @PreAuthorize("hasAuthority('ADMIN')")
     public ResponseEntity<Response> updateVehicleDetails(
-            @PathVariable String cabId,
+            @PathVariable String vehicleId,
             @RequestParam(required = false) MultipartFile photo,
             @RequestParam(required = false) String licensePlate,
             @RequestParam(required = false) String vehicleType,
             @RequestParam(required = false) String model,
             @RequestParam(required = false) String color,
             @RequestParam(required = false) String description,
-            @RequestParam(required = false) BigDecimal cabFare,
+            @RequestParam(required = false) BigDecimal fare,
             @RequestParam(required = false) String driverName) {
-        Response response = vehicleService.updateVehicleDetails(cabId, licensePlate, vehicleType, model, color, description, cabFare, driverName, photo);
+        Response response = vehicleService.updateVehicleDetails(vehicleId, licensePlate, vehicleType, model, color, description, fare, driverName, photo);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
@@ -97,12 +97,20 @@ public class VehicleController {
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 
-    @GetMapping("/available-vehicles-by-datetime-and-type")
-    public ResponseEntity<Response> getAvailableVehiclesByDateTimeAndVehicleType(
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime pickupDateTime,
-            @RequestParam @NotBlank String vehicleType) {
+    @GetMapping("/available-vehicles-by-date-and-type")
+    public ResponseEntity<Response> getAvailableVehiclesByDateAndVehicleType(
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate startDate,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDate endDate,
+            @RequestParam(required = false) @NotBlank String vehicleType) {
 
-        Response response = vehicleService.getAvailableVehiclesByDateTimeAndVehicleType(pickupDateTime, vehicleType);
+        if (startDate == null || endDate == null || vehicleType.isBlank()) {
+            Response response = new Response();
+            response.setStatusCode(400);
+            response.setMessage("All fields are required!");
+            return ResponseEntity.status(response.getStatusCode()).body(response);
+        }
+
+        Response response = vehicleService.getAvailableVehiclesByDateAndVehicleType(startDate, endDate, vehicleType);
         return ResponseEntity.status(response.getStatusCode()).body(response);
     }
 }

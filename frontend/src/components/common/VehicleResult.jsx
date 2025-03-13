@@ -15,8 +15,12 @@ const VehicleResult = ({ vehicleSearchResults }) => {
                             <img className='vehicle-list-item-image' src={vehicle.vehiclePhotoUrl} alt={vehicle.vehicleType} />
                             <div className='vehicle-details'>
                                 <h3>{vehicle.vehicleType}</h3>
-                                <p>Price: Rs.{vehicle.vehiclePrice}</p>
-                                <p>Description: {vehicle.vehicleDescription}</p>
+                                <p>Model: {vehicle.model}</p>
+                                <p>Color: {vehicle.color}</p>
+                                <p>License Plate: {vehicle.licensePlate}</p>                                
+                                <p>Description: {vehicle.description}</p>
+                                <p>Fare: Rs.{vehicle.fare}</p>
+                                <p>Driver Name: {vehicle.driverName}</p>
                             </div>
 
                             <div className='book-now-div'>

@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -27,20 +27,20 @@ public class VehicleService implements IVehicleService {
     private final AWSS3Service awsS3Service;
 
     @Override
-    public Response addNewVehicle(MultipartFile photo, String licensePlate, String vehicleType, String model, String color, String description, BigDecimal cabFare, String driverName) {
+    public Response addNewVehicle(MultipartFile photo, String licensePlate, String vehicleType, String model, String color, String description, BigDecimal fare, String driverName) {
 
         Response response = new Response();
 
         try {
             String imageUrl = awsS3Service.saveImageToS3(photo);
             Vehicle vehicle = new Vehicle();
-            vehicle.setCabPhotoUrl(imageUrl);
+            vehicle.setVehiclePhotoUrl(imageUrl);
             vehicle.setLicensePlate(licensePlate);
             vehicle.setVehicleType(vehicleType);
             vehicle.setModel(model);
             vehicle.setColor(color);
             vehicle.setDescription(description);
-            vehicle.setCabFare(cabFare);
+            vehicle.setFare(fare);
             vehicle.setDriverName(driverName);
 
             Vehicle savedVehicle = vehicleRepository.save(vehicle);
@@ -83,12 +83,12 @@ public class VehicleService implements IVehicleService {
     }
 
     @Override
-    public Response getVehicleById(String cabId) {
+    public Response getVehicleById(String vehicleId) {
 
         Response response = new Response();
 
         try {
-            Vehicle vehicle = vehicleRepository.findById(cabId).orElseThrow(()-> new OurException("Vehicle not found!"));
+            Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(()-> new OurException("Vehicle not found!"));
             VehicleDTO vehicleDTO = Utilities.mapVehicleEntityToVehicleDTOPlusBookings(vehicle);
 
             response.setStatusCode(200);
@@ -130,7 +130,7 @@ public class VehicleService implements IVehicleService {
     }
 
     @Override
-    public Response updateVehicleDetails(String cabId, String licensePlate, String vehicleType, String model, String color, String description, BigDecimal cabFare, String driverName, MultipartFile photo) {
+    public Response updateVehicleDetails(String vehicleId, String licensePlate, String vehicleType, String model, String color, String description, BigDecimal fare, String driverName, MultipartFile photo) {
 
         Response response = new Response();
 
@@ -140,16 +140,16 @@ public class VehicleService implements IVehicleService {
                 imageUrl = awsS3Service.saveImageToS3(photo);
             }
 
-            Vehicle vehicle = vehicleRepository.findById(cabId).orElseThrow(()-> new OurException("Vehicle not found!"));
+            Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(()-> new OurException("Vehicle not found!"));
 
             if (licensePlate != null && !licensePlate.isBlank()) vehicle.setLicensePlate(licensePlate);
             if (vehicleType != null && !vehicleType.isBlank()) vehicle.setVehicleType(vehicleType);
             if (model != null && !model.isBlank()) vehicle.setModel(model);
             if (color != null && !color.isBlank()) vehicle.setColor(color);
             if (description != null && !description.isBlank()) vehicle.setDescription(description);
-            if (cabFare != null) vehicle.setCabFare(cabFare);
+            if (fare != null) vehicle.setFare(fare);
             if (driverName != null && !driverName.isBlank()) vehicle.setDriverName(driverName);
-            if(imageUrl != null) vehicle.setCabPhotoUrl(imageUrl);
+            if(imageUrl != null) vehicle.setVehiclePhotoUrl(imageUrl);
 
             Vehicle updatedVehicle = vehicleRepository.save(vehicle);
             VehicleDTO vehicleDTO = Utilities.mapVehicleEntityToVehicleDTO(updatedVehicle);
@@ -190,16 +190,13 @@ public class VehicleService implements IVehicleService {
     }
 
     @Override
-    public Response getAvailableVehiclesByDateTimeAndVehicleType(LocalDateTime pickupDateTime, String vehicleType) {
+    public Response getAvailableVehiclesByDateAndVehicleType(LocalDate startDate, LocalDate endDate, String vehicleType) {
 
         Response response = new Response();
 
-        LocalDateTime startTime = pickupDateTime.minusMinutes(30);
-        LocalDateTime endTime = pickupDateTime.plusMinutes(120);
-
         try {
-            List<Booking> bookings = bookingRepository.findBookingsByTimeRange(startTime, endTime, vehicleType);
-            List<String> bookedVehicleIds = bookings.stream().map(booking -> booking.getVehicle().getCabId()).toList();
+            List<Booking> bookings = bookingRepository.findBookingsByDateRange(startDate, endDate, vehicleType);
+            List<String> bookedVehicleIds = bookings.stream().map(booking -> booking.getVehicle().getId()).toList();
 
             List<Vehicle> availableVehicles = vehicleRepository.findByVehicleTypeLikeAndCabIdNotIn(vehicleType, bookedVehicleIds);
             List<VehicleDTO> vehicleDTOList = Utilities.mapVehicleListEntityToVehicleListDTO(availableVehicles);
