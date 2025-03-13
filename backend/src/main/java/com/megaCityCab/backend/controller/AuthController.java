@@ -3,7 +3,6 @@ package com.megaCityCab.backend.controller;
 import com.megaCityCab.backend.dto.AdminLoginRequest;
 import com.megaCityCab.backend.dto.CustomerLoginRequest;
 import com.megaCityCab.backend.dto.Response;
-import com.megaCityCab.backend.entity.Customer;
 import com.megaCityCab.backend.service.connection.IAdminService;
 import com.megaCityCab.backend.service.connection.ICustomerService;
 import jakarta.validation.Valid;

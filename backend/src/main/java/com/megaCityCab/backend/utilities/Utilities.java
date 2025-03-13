@@ -4,7 +4,6 @@ import com.megaCityCab.backend.dto.BookingDTO;
 import com.megaCityCab.backend.dto.CustomerDTO;
 import com.megaCityCab.backend.dto.VehicleDTO;
 import com.megaCityCab.backend.entity.Booking;
-import com.megaCityCab.backend.entity.Customer;
 import com.megaCityCab.backend.entity.Vehicle;
 
 import java.security.SecureRandom;

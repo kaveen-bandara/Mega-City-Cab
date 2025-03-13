@@ -2,7 +2,6 @@ package com.megaCityCab.backend.service.connection;
 
 import com.megaCityCab.backend.dto.CustomerLoginRequest;
 import com.megaCityCab.backend.dto.Response;
-import com.megaCityCab.backend.entity.Customer;
 
 public interface ICustomerService {
 

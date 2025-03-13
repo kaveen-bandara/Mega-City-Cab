@@ -2,41 +2,48 @@ package com.megaCityCab.backend.entity;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Document(collection = "bookings")
 public class Booking {
 
     @Id
-    private String bookingNumber;
+    private String id;
 
-    @NotBlank(message = "Pickup location is required!")
-    private String pickupLocation;
+    @NotBlank(message = "Destination is required!")
+    private String destination;
 
-    @NotBlank(message = "Dropoff location is required!")
-    private String dropoffLocation;
+    @NotNull(message = "Start date is required!")
+    private LocalDate startDate;
 
-    @NotNull(message = "Pickup date and time is required!")
-    private LocalDateTime pickupDateTime;
+    @NotNull(message = "End date is required!")
+    private LocalDate endDate;
 
     private String message;
 
     private String confirmationCode;
 
     @DBRef
-    private Customer customer;
+    private User user;
 
     @DBRef
     private Vehicle vehicle;
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id='" + id + '\'' +
+                ", destination='" + destination + '\'' +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
+                ", message='" + message + '\'' +
+                ", confirmationCode='" + confirmationCode + '\'' +
+                '}';
+    }
 }

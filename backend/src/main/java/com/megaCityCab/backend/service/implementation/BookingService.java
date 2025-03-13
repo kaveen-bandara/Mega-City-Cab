@@ -3,7 +3,6 @@ package com.megaCityCab.backend.service.implementation;
 import com.megaCityCab.backend.dto.BookingDTO;
 import com.megaCityCab.backend.dto.Response;
 import com.megaCityCab.backend.entity.Booking;
-import com.megaCityCab.backend.entity.Customer;
 import com.megaCityCab.backend.entity.Vehicle;
 import com.megaCityCab.backend.exception.OurException;
 import com.megaCityCab.backend.repository.BookingRepository;

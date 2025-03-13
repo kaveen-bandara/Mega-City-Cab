@@ -1,6 +1,5 @@
 package com.megaCityCab.backend.repository;
 
-import com.megaCityCab.backend.entity.Admin;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;

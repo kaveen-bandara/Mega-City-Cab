@@ -1,7 +1,5 @@
 package com.megaCityCab.backend.service;
 
-import com.megaCityCab.backend.entity.Admin;
-import com.megaCityCab.backend.entity.Customer;
 import com.megaCityCab.backend.repository.AdminRepository;
 import com.megaCityCab.backend.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
