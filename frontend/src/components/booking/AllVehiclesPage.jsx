@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ApiService from '../../service/ApiService';
+import ApiService from '../../services/ApiService';
 import Pagination from '../common/Pagination';
 import VehicleResult from '../common/VehicleResult';
 import VehicleSearch from '../common/VehicleSearch';

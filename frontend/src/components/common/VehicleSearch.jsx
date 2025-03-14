@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import ApiService from '../../service/ApiService';
+import ApiService from '../../services/ApiService';
 
 const VehicleSearch = ({ handleSearchResult }) => {
   const [startDate, setStartDate] = useState(null);

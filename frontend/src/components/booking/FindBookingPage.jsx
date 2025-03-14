@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ApiService from '../../service/ApiService';
+import ApiService from '../../services/ApiService';
 
 const FindBookingPage = () => {
     const [confirmationCode, setConfirmationCode] = useState('');

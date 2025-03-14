@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import ApiService from '../../service/ApiService';
+import ApiService from '../../services/ApiService';
 import DatePicker from 'react-datepicker';
 
 const VehicleDetailsPage = () => {

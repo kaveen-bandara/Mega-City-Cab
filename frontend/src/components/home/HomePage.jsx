@@ -34,7 +34,7 @@ const HomePage = () => {
             {/* SERVICES SECTION */}
             <section className='service-section'>
                 <div className='service-card'>
-                    <img src='./assets/images/ac.png' alt="Air Conditioning" />
+                    <img src='./assets/images/air-conditioning.png' alt="Air Conditioning" />
                     <div className='service-details'>
                         <h3 className='service-title'>Air Conditioning</h3>
                         <p className='service-description'>Stay cool and comfortable throughout your trip.</p>

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import ApiService from '../../service/ApiService';
+import ApiService from '../../services/ApiService';
 import { useNavigate } from 'react-router-dom';
 
 function RegisterPage() {
