@@ -3,7 +3,7 @@ import React from 'react';
 const Pagination = ({ vehiclesPerPage, totalVehicles, currentPage, paginate }) => {
     const pageNumbers = [];
 
-    for (let i = 1; i <= Math.ceil(totalVehicles / vehiclesPerPage); i++) {
+    for(let i = 1; i <= Math.ceil(totalVehicles / vehiclesPerPage); i++) {
     pageNumbers.push(i);
     }
 

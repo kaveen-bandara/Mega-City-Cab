@@ -33,7 +33,7 @@ public class VehicleController {
             @RequestParam("fare") BigDecimal fare,
             @RequestParam("driverName") String driverName) {
 
-        if(photo == null || photo.isEmpty()
+        if (photo == null || photo.isEmpty()
                 || licensePlate == null || licensePlate.isBlank()
                 || vehicleType == null || vehicleType.isBlank()
                 || model == null || model.isBlank()

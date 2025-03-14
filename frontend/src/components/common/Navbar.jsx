@@ -10,7 +10,7 @@ function Navbar() {
 
     const handleLogout = () => {
         const isLogout = window.confirm("Are you sure you want to logout?");
-        if (isLogout) {
+        if(isLogout) {
             ApiService.logout();
             navigate('/home');
         }

@@ -86,7 +86,7 @@ public class Utilities {
         vehicleDTO.setFare(vehicle.getFare());
         vehicleDTO.setDriverName(vehicle.getDriverName());
 
-        if(vehicle.getBookings() != null) {
+        if (vehicle.getBookings() != null) {
             vehicleDTO.setBookings(vehicle.getBookings().stream().map(Utilities::mapBookingEntityToBookingDTO).collect(Collectors.toList()));
         }
 
@@ -104,18 +104,18 @@ public class Utilities {
         bookingDTO.setMessage(booking.getMessage());
         bookingDTO.setConfirmationCode(booking.getConfirmationCode());
 
-        if(mapUser) {
+        if (mapUser) {
             bookingDTO.setUser(Utilities.mapUserEntityToUserDTO(booking.getUser()));
         }
 
-        if(booking.getVehicle() != null) {
+        if (booking.getVehicle() != null) {
             bookingDTO.setVehicle(mapVehicleEntityToVehicleDTO(booking.getVehicle()));
         }
 
         return bookingDTO;
     }
 
-    public static UserDTO mapUserEntityToUserDTOPlusCustomerBookingsAndVehicle(User user) {
+    public static UserDTO mapUserEntityToUserDTOPlusUserBookingsAndVehicle(User user) {
 
         UserDTO userDTO = new UserDTO();
 
@@ -125,7 +125,7 @@ public class Utilities {
         userDTO.setMobileNumber(user.getMobileNumber());
         userDTO.setRole(user.getRole());
 
-        if(!user.getBookings().isEmpty()) {
+        if (!user.getBookings().isEmpty()) {
             userDTO.setBookings(user.getBookings().stream().map(booking -> mapBookingEntityToBookingDTOPlusBookedVehicles(booking, false)).collect(Collectors.toList()));
         }
 

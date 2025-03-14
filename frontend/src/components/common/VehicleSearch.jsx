@@ -41,7 +41,7 @@ const VehicleSearch = ({ handleSearchResult }) => {
 
       if (response.statusCode === 200) {
         if (response.vehicleList.length === 0) {
-          showError('Vehicle is currently unavailable for this date range on the selected vehicle type!');
+          showError("Vehicle is currently unavailable for this date range on the selected vehicle type!");
           return
         }
         handleSearchResult(response.vehicleList);

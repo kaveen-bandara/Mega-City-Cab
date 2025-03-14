@@ -149,7 +149,7 @@ public class VehicleService implements IVehicleService {
             if (description != null && !description.isBlank()) vehicle.setDescription(description);
             if (fare != null) vehicle.setFare(fare);
             if (driverName != null && !driverName.isBlank()) vehicle.setDriverName(driverName);
-            if(imageUrl != null) vehicle.setVehiclePhotoUrl(imageUrl);
+            if (imageUrl != null) vehicle.setVehiclePhotoUrl(imageUrl);
 
             Vehicle updatedVehicle = vehicleRepository.save(vehicle);
             VehicleDTO vehicleDTO = Utilities.mapVehicleEntityToVehicleDTO(updatedVehicle);

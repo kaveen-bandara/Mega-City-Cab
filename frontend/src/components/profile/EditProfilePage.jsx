@@ -21,7 +21,7 @@ const EditProfilePage = () => {
     }, []);
 
     const handleDeleteProfile = async () => {
-        if (!window.confirm('Are you sure you want to delete your account?')) {
+        if(!window.confirm('Are you sure you want to delete your account?')) {
             return;
         }
         try {

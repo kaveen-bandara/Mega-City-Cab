@@ -46,13 +46,11 @@ public class BookingService implements IBookingService {
 
             Booking savedBooking = bookingRepository.save(bookingRequest);
 
-            // Add the booking to the user's bookings list
             List<Booking> userBookings = user.getBookings();
             userBookings.add(savedBooking);
             user.setBookings(userBookings);
             userRepository.save(user);
 
-            // Add the booking to the vehicle's bookings list
             List<Booking> roomBookings = vehicle.getBookings();
             roomBookings.add(savedBooking);
             vehicle.setBookings(roomBookings);
@@ -94,7 +92,8 @@ public class BookingService implements IBookingService {
     }
 
     @Override
-    public Response findBookingByConfirmationCode(String confirmationCode) {
+    public Response getBookingByConfirmationCode(String confirmationCode) {
+
         Response response = new Response();
 
         try {
@@ -124,14 +123,12 @@ public class BookingService implements IBookingService {
         try {
             Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new OurException("Booking not found!"));
 
-            // Remove the booking from the associated user
             User user = booking.getUser();
             if (user != null) {
                 user.getBookings().removeIf(b -> b.getId().equals(bookingId));
                 userRepository.save(user);
             }
 
-            // Remove the booking from the associated vehicle
             Vehicle vehicle = booking.getVehicle();
             if (vehicle != null) {
                 vehicle.getBookings().removeIf(b -> b.getId().equals(bookingId));

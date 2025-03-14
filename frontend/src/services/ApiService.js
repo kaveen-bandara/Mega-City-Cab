@@ -52,8 +52,8 @@ export default class ApiService {
         return response.data;
     }
 
-    /* get profile */
-    static async getProfile() {
+    /* get user profile */
+    static async getUserProfile() {
         const response = await axios.get(`${this.BASE_URL}/user/profile`, {
             headers: this.getHeader()
         });
@@ -151,7 +151,7 @@ export default class ApiService {
     }
 
     /* get booking by confirmation code */
-    static async findBookingByConfirmationCode(confirmationCode) {
+    static async getBookingByConfirmationCode(confirmationCode) {
         const result = await axios.get(`${this.BASE_URL}/booking/${confirmationCode}`);
         return result.data;
     }

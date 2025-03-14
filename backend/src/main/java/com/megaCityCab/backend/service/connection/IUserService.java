@@ -16,7 +16,7 @@ public interface IUserService {
 
     Response deleteUser(String userId);
 
-    Response getProfile(String email);
+    Response getUserProfile(String email);
 
     Response getUserBookingHistory(String userId);
 }

@@ -37,7 +37,7 @@ public class UserService implements IUserService {
                 user.setRole("CUSTOMER");
             }
 
-            if(userRepository.existsByEmail(user.getEmail())) {
+            if (userRepository.existsByEmail(user.getEmail())) {
                 throw new OurException("Email already exists!");
             }
 
@@ -160,7 +160,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Response getProfile(String email) {
+    public Response getUserProfile(String email) {
 
         Response response = new Response();
 
@@ -190,7 +190,7 @@ public class UserService implements IUserService {
 
         try {
             User user = userRepository.findById(userId).orElseThrow(()-> new OurException("User not found!"));
-            UserDTO userDTO = Utilities.mapUserEntityToUserDTOPlusCustomerBookingsAndVehicle(user);
+            UserDTO userDTO = Utilities.mapUserEntityToUserDTOPlusUserBookingsAndVehicle(user);
             response.setStatusCode(200);
             response.setMessage("Successfully gotten user booking history!");
             response.setUser(userDTO);

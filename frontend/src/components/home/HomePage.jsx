@@ -5,11 +5,7 @@ import VehicleSearch from '../common/VehicleSearch';
 const HomePage = () => {
 
     const [vehicleSearchResults, setVehicleSearchResults] = useState([]);
-
-    // Function to handle search results
-    const handleSearchResult = (results) => {
-        setVehicleSearchResults(results);
-    };
+    const handleSearchResult = (results) => { setVehicleSearchResults(results) };
 
     return (
         <div className='home'>
@@ -22,7 +18,7 @@ const HomePage = () => {
                         <h1>
                             Welcome to <span className='mega-city-cab-color'>Mega City Cab</span>
                         </h1><br />
-                        <h3>Step into a haven of comfort and care</h3>
+                        <h3>Your Journey with Us Starts Here</h3>
                     </div>
                 </header>
             </section>
@@ -45,17 +41,17 @@ const HomePage = () => {
                     </div>
                 </div>
                 <div className='service-card'>
-                    <img src='./assets/images/mini-bar.png' alt="Security" />
+                    <img src='./assets/images/security.png' alt="Security" />
                     <div className='service-details'>
                         <h3 className='service-title'>Security</h3>
                         <p className='service-description'>A secure travel for our customers is our main priority.</p>
                     </div>
                 </div>
                 <div className='service-card'>
-                    <img src='./assets/images/parking.png' alt="Efficient" />
+                    <img src='./assets/images/trained-drivers.png' alt="Trained Drivers" />
                     <div className='service-details'>
-                        <h3 className='service-title'>Efficient</h3>
-                        <p className='service-description'>Our drivers are trained to make better driving decisions giving you the best passenger experience.</p>
+                        <h3 className='service-title'>Trained Drivers</h3>
+                        <p className='service-description'>Our drivers are experts behind the wheel, gone through a thorough vetting and selection process.</p>
                     </div>
                 </div>
                 <div className='service-card'>
