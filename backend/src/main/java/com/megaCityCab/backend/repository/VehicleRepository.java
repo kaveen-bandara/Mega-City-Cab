@@ -15,6 +15,6 @@ public interface VehicleRepository extends MongoRepository<Vehicle, String> {
     @Query("{ 'bookings': { $size: 0 } }")
     List<Vehicle> findAllAvailableVehicles();
 
-    @Query("{ 'vehicleType': { $regex: ?0, $options: 'i' }, 'cabId': { $nin: ?1 } }")
+    @Query("{ 'vehicleType': { $regex: ?0, $options: 'i' }, 'vehicleId': { $nin: ?1 } }")
     List<Vehicle> findByVehicleTypeLikeAndCabIdNotIn(String vehicleType, List<String> bookedVehicleIds);
 }
