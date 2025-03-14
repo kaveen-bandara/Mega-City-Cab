@@ -2,90 +2,88 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 import Pagination from '../common/Pagination';
-import RoomResult from '../common/RoomResult';
+import VehicleResult from '../common/VehicleResult';
 
-const ManageRoomPage = () => {
-  const [rooms, setRooms] = useState([]);
-  const [filteredRooms, setFilteredRooms] = useState([]);
-  const [roomTypes, setRoomTypes] = useState([]);
-  const [selectedRoomType, setSelectedRoomType] = useState('');
+const ManageVehiclePage = () => {
+  const [vehicles, setVehicles] = useState([]);
+  const [filteredVehicles, setFilteredVehicles] = useState([]);
+  const [vehicleTypes, setVehicleTypes] = useState([]);
+  const [selectedVehicleType, setSelectedVehicleType] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-  const [roomsPerPage] = useState(5);
+  const [vehiclesPerPage] = useState(5);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchRooms = async () => {
+    const fetchVehicles = async () => {
       try {
-        const response = await ApiService.getAllRooms();
-        const allRooms = response.roomList;
-        setRooms(allRooms);
-        setFilteredRooms(allRooms);
+        const response = await ApiService.getAllVehicles();
+        const allVehicles = response.vehicleList;
+        setVehicles(allVehicles);
+        setFilteredVehicles(allVehicles);
       } catch (error) {
-        console.error('Error fetching rooms:', error.message);
+        console.error("Error fetching vehicles: ", error.message);
       }
     };
 
-    const fetchRoomTypes = async () => {
+    const fetchVehicleTypes = async () => {
       try {
-        const types = await ApiService.getRoomTypes();
-        setRoomTypes(types);
+        const types = await ApiService.getAllVehicleTypes();
+        setVehicleTypes(types);
       } catch (error) {
-        console.error('Error fetching room types:', error.message);
+        console.error("Error fetching vehicle types: ", error.message);
       }
     };
 
-    fetchRooms();
-    fetchRoomTypes();
+    fetchVehicles();
+    fetchVehicleTypes();
   }, []);
 
-  const handleRoomTypeChange = (e) => {
-    setSelectedRoomType(e.target.value);
-    filterRooms(e.target.value);
+  const handleVehicleTypeChange = (e) => {
+    setSelectedVehicleType(e.target.value);
+    filterVehicles(e.target.value);
   };
 
-  const filterRooms = (type) => {
+  const filterVehicles = (type) => {
     if (type === '') {
-      setFilteredRooms(rooms);
+      setFilteredVehicles(vehicles);
     } else {
-      const filtered = rooms.filter((room) => room.roomType === type);
-      setFilteredRooms(filtered);
+      const filtered = vehicles.filter((vehicle) => vehicle.vehicleType === type);
+      setFilteredVehicles(filtered);
     }
-    setCurrentPage(1); // Reset to first page after filtering
+    setCurrentPage(1);
   };
 
-  // Pagination
-  const indexOfLastRoom = currentPage * roomsPerPage;
-  const indexOfFirstRoom = indexOfLastRoom - roomsPerPage;
-  const currentRooms = filteredRooms.slice(indexOfFirstRoom, indexOfLastRoom);
+  const indexOfLastVehicle = currentPage * vehiclesPerPage;
+  const indexOfFirstVehicle = indexOfLastVehicle - vehiclesPerPage;
+  const currentVehicles = filteredVehicles.slice(indexOfFirstVehicle, indexOfLastVehicle);
 
-  // Change page
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   return (
-    <div className='all-rooms'>
-      <h2>All Rooms</h2>
-      <div className='all-room-filter-div' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <div className='all-vehicles'>
+      <h2>All Vehicles</h2>
+      <div className='all-vehicle-filter-div' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div className='filter-select-div'>
-          <label>Filter by Room Type:</label>
-          <select value={selectedRoomType} onChange={handleRoomTypeChange}>
+          <label>Filter by Vehicle Type:</label>
+          <select value={selectedVehicleType} onChange={handleVehicleTypeChange}>
             <option value="">All</option>
-            {roomTypes.map((type) => (
+            {vehicleTypes.map((type) => (
               <option key={type} value={type}>
                 {type}
               </option>
             ))}
           </select>
-          <button className='add-room-button' onClick={() => navigate('/admin/add-room')}>
-            Add Room
+          <button className='add-vehicle-button' onClick={() => navigate('/admin/add-vehicle')}>
+            Add Vehicle
           </button>
         </div>
       </div>
 
-      <RoomResult roomSearchResults={currentRooms} />
+      <VehicleResult vehicleSearchResults={currentVehicles} />
 
       <Pagination
-        roomsPerPage={roomsPerPage}
-        totalRooms={filteredRooms.length}
+        vehiclesPerPage={vehiclesPerPage}
+        totalVehicles={filteredVehicles.length}
         currentPage={currentPage}
         paginate={paginate}
       />
@@ -93,4 +91,4 @@ const ManageRoomPage = () => {
   );
 };
 
-export default ManageRoomPage;
+export default ManageVehiclePage;

@@ -10,7 +10,7 @@ const EditProfilePage = () => {
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
-                const response = await ApiService.getProfile();
+                const response = await ApiService.getUserProfile();
                 setUser(response.user);
             } catch (error) {
                 setError(error.message);

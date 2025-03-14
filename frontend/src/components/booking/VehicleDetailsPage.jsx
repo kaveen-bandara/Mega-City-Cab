@@ -24,7 +24,7 @@ const VehicleDetailsPage = () => {
                 setIsLoading(true);
                 const response = await ApiService.getVehicleById(vehicleId);
                 setVehicleDetails(response.vehicle);
-                const userProfile = await ApiService.getProfile();
+                const userProfile = await ApiService.getUserProfile();
                 setUserId(userProfile.user.id);
             } catch (error) {
                 setError(error.response?.data?.message || error.message);
@@ -44,12 +44,12 @@ const VehicleDetailsPage = () => {
         }
 
         const oneDay = 24 * 60 * 60 * 1000;
-        const startDate = new Date(startDate);
-        const endDate = new Date(endDate);
-        const totalDays = Math.round(Math.abs((endDate - startDate) / oneDay)) + 1;
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const totalDays = Math.round(Math.abs((end - start) / oneDay)) + 1;
 
-        const vehiclePricePer = vehicleDetails.fare;
-        const totalFare = vehiclePricePer * totalDays;
+        const vehicleFarePerDay = vehicleDetails.fare;
+        const totalFare = vehicleFarePerDay * totalDays;
 
         setTotalFare(totalFare);
     };
@@ -57,24 +57,16 @@ const VehicleDetailsPage = () => {
     const acceptBooking = async () => {
         try {
 
-            const startDate = new Date(startDate);
-            const endDate = new Date(endDate);
+            const start = new Date(startDate);
+            const end = new Date(endDate);
 
-            console.log("Original Start Date: ", startDate);
-            console.log("Original Start Date: ", endDate);
-
-            const formattedStartDate = new Date(startDate.getTime() - (startDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-            const formattedEndDate = new Date(endDate.getTime() - (endDate.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
-
-            console.log("Formated Start Date: ", formattedStartDate);
-            console.log("Formated Start Date: ", formattedEndDate);
+            const formattedStartDate = new Date(start.getTime() - (start.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
+            const formattedEndDate = new Date(end.getTime() - (end.getTimezoneOffset() * 60000)).toISOString().split('T')[0];
 
             const booking = {
                 startDate: formattedStartDate,
                 endDate: formattedEndDate
             };
-            console.log(booking)
-            console.log(endDate)
 
             const response = await ApiService.saveBooking(vehicleId, userId, booking);
             if (response.statusCode === 200) {
@@ -126,7 +118,7 @@ const VehicleDetailsPage = () => {
                 <p>{licensePlate}</p>
                 <p>{model}</p>
                 <p>{color}</p>
-                <p>Price: Rs.{fare}</p>
+                <p>Fare: Rs.{fare}</p>
                 <p>{description}</p>
                 <p>{driverName}</p>
             </div>
@@ -181,7 +173,7 @@ const VehicleDetailsPage = () => {
 
                 {totalFare > 0 && (
                     <div className='total-price'>
-                        <p>Total Price: ${totalFare}</p>
+                        <p>Total Fare: ${totalFare}</p>
                         <button onClick={acceptBooking} className='accept-booking'>Accept Booking</button>
                     </div>
                 )}

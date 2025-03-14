@@ -9,7 +9,7 @@ const AdminPage = () => {
     useEffect(() => {
         const fetchAdminName = async () => {
             try {
-                const response = await ApiService.getProfile();
+                const response = await ApiService.getUserProfile();
                 setAdminName(response.user.name);
             } catch (error) {
                 console.error('Error fetching admin details: ', error.message);

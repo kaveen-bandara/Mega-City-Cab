@@ -65,7 +65,7 @@ const EditBookingPage = () => {
                     <div>
                         <p> Name: {bookingDetails.user.name}</p>
                         <p> Email: {bookingDetails.user.email}</p>
-                        <p> Phone Number: {bookingDetails.user.phoneNumber}</p>
+                        <p> Phone Number: {bookingDetails.user.mobileNumber}</p>
                     </div>
 
                     <br />
@@ -74,8 +74,12 @@ const EditBookingPage = () => {
                     <h3>Vehicle Details</h3>
                     <div>
                         <p> Vehicle Type: {bookingDetails.vehicle.vehicleType}</p>
+                        <p> License Plate: {bookingDetails.vehicle.licensePlate}</p>
+                        <p> Model: {bookingDetails.vehicle.model}</p>
+                        <p> Color: {bookingDetails.vehicle.color}</p>
                         <p> Fare: Rs.{bookingDetails.vehicle.fare}</p>
-                        <p> Description: {bookingDetails.room.description}</p>
+                        <p> Description: {bookingDetails.vehicle.description}</p>
+                        <p> Driver Name: {bookingDetails.vehicle.driverName}</p>
                         <img src={bookingDetails.vehicle.vehiclePhotoUrl} alt="" sizes='' srcSet='' />
                     </div>
                     <button

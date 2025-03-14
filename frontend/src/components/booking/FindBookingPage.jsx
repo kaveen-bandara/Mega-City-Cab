@@ -52,7 +52,7 @@ const FindBookingPage = () => {
                     <div>
                         <p> Name: {bookingDetails.user.name}</p>
                         <p> Email: {bookingDetails.user.email}</p>
-                        <p> Mobile Number: {bookingDetails.user.mobileNumber}</p>
+                        <p> Phone Number: {bookingDetails.user.mobileNumber}</p>
                     </div>
 
                     <br />

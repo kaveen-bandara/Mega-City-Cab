@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '../../service/ApiService';
 
-const AddRVehiclePage = () => {
+const AddVehiclePage = () => {
     const navigate = useNavigate();
     const [vehicleDetails, setVehicleDetails] = useState({
         licensePlate: '',
@@ -149,7 +149,7 @@ const AddRVehiclePage = () => {
                     <label>License Plate</label>
                     <input
                         type='text'
-                        name='fare'
+                        name='licensePlate'
                         value={vehicleDetails.licensePlate}
                         onChange={handleChange}
                     />
@@ -204,4 +204,4 @@ const AddRVehiclePage = () => {
     );
 };
 
-export default AddRVehiclePage;
+export default AddVehiclePage;

@@ -19,7 +19,7 @@ const ManageBookingsPage = () => {
                 setBookings(allBookings);
                 setFilteredBookings(allBookings);
             } catch (error) {
-                console.error('Error fetching bookings:', error.message);
+                console.error("Error fetching bookings: ", error.message);
             }
         };
 
@@ -35,7 +35,7 @@ const ManageBookingsPage = () => {
             setFilteredBookings(bookings);
         } else {
             const filtered = bookings.filter((booking) =>
-                booking.bookingConfirmationCode && booking.bookingConfirmationCode.toLowerCase().includes(term.toLowerCase())
+                booking.confirmationCode && booking.confirmationCode.toLowerCase().includes(term.toLowerCase())
             );
             setFilteredBookings(filtered);
         }
@@ -56,33 +56,34 @@ const ManageBookingsPage = () => {
         <div className='bookings-container'>
             <h2>All Bookings</h2>
             <div className='search-div'>
-                <label>Filter by Booking Number:</label>
+                <label>Filter by Confirmation Code:</label>
                 <input
-                    type="text"
+                    type='text'
                     value={searchTerm}
                     onChange={handleSearchChange}
-                    placeholder="Enter booking number"
+                    placeholder="Enter Confirmation Code"
                 />
             </div>
 
-            <div className="booking-results">
+            <div className='booking-results'>
                 {currentBookings.map((booking) => (
-                    <div key={booking.id} className="booking-result-item">
-                        <p><strong>Booking Code:</strong> {booking.bookingConfirmationCode}</p>
-                        <p><strong>Check In Date:</strong> {booking.checkInDate}</p>
-                        <p><strong>Check out Date:</strong> {booking.checkOutDate}</p>
-                        <p><strong>Total Guests:</strong> {booking.totalNumOfGuest}</p>
+                    <div key={booking.id} className='booking-result-item'>
+                        <p><strong>Confirmation Code:</strong> {booking.confirmationCode}</p>
+                        <p><strong>Destination:</strong> {booking.destination}</p>
+                        <p><strong>Start Date:</strong> {booking.startDate}</p>
+                        <p><strong>End Date:</strong> {booking.endDate}</p>
+                        <p><strong>Message:</strong> {booking.message}</p>
                         <button
-                            className="edit-room-button"
-                            onClick={() => navigate(`/admin/edit-booking/${booking.bookingConfirmationCode}`)}
+                            className='edit-vehicle-button'
+                            onClick={() => navigate(`/admin/edit-booking/${booking.confirmationCode}`)}
                         >Manage Booking</button>
                     </div>
                 ))}
             </div>
 
             <Pagination
-                roomsPerPage={bookingsPerPage}
-                totalRooms={filteredBookings.length}
+                vehiclesPerPage={bookingsPerPage}
+                totalVehicles={filteredBookings.length}
                 currentPage={currentPage}
                 paginate={paginate}
             />

@@ -10,7 +10,7 @@ const ProfilePage = () => {
     useEffect(() => {
         const fetchUserProfile = async () => {
             try {
-                const response = await ApiService.getProfile();
+                const response = await ApiService.getUserProfile();
                 const userPlusBookings = await ApiService.getUserBookingHistory(response.user.id);
                 setUser(userPlusBookings.user)
 

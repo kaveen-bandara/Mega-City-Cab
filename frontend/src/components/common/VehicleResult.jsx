@@ -14,8 +14,8 @@ const VehicleResult = ({ vehicleSearchResults }) => {
                         <div key={vehicle.id} className='vehicle-list-item'>
                             <img className='vehicle-list-item-image' src={vehicle.vehiclePhotoUrl} alt={vehicle.vehicleType} />
                             <div className='vehicle-details'>
-                                <p>License Plate: {vehicle.licensePlate}</p> 
                                 <h3>{vehicle.vehicleType}</h3>
+                                <p>License Plate: {vehicle.licensePlate}</p> 
                                 <p>Model: {vehicle.model}</p>
                                 <p>Color: {vehicle.color}</p>                               
                                 <p>Description: {vehicle.description}</p>
