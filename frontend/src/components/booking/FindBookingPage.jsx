@@ -13,7 +13,7 @@ const FindBookingPage = () => {
             return;
         }
         try {
-            const response = await ApiService.findBookingByConfirmationCode(confirmationCode);
+            const response = await ApiService.getBookingByConfirmationCode(confirmationCode);
             setBookingDetails(response.booking);
             setError(null);
         } catch (error) {

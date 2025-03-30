@@ -11,6 +11,7 @@ const VehicleDetailsPage = () => {
     const [error, setError] = useState(null);
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
+    const [destination, setDestination] = useState('');
     const [totalFare, setTotalFare] = useState(0);
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [userId, setUserId] = useState('');
@@ -37,8 +38,8 @@ const VehicleDetailsPage = () => {
 
 
     const handleConfirmBooking = async () => {
-        if (!startDate || !endDate) {
-            setErrorMessage("Please select start date and end date!");
+        if (!startDate || !endDate || !destination) {
+            setErrorMessage("Please select start date, end date and destination!");
             setTimeout(() => setErrorMessage(''), 5000);
             return;
         }
@@ -65,7 +66,8 @@ const VehicleDetailsPage = () => {
 
             const booking = {
                 startDate: formattedStartDate,
-                endDate: formattedEndDate
+                endDate: formattedEndDate,
+                destination: destination
             };
 
             const response = await ApiService.saveBooking(vehicleId, userId, booking);
@@ -164,6 +166,9 @@ const VehicleDetailsPage = () => {
                         placeholderText="End Date"
                         dateFormat='dd/MM/yyyy'
                         />
+
+                        <input className='detail-search-field' type='text' name='destination' value={destination} placeholderText="Destination" onChange={(e) => setDestination(e.target.value)} required />
+
 
                         <div className='guest-container'>              
                             <button className='confirm-booking' onClick={handleConfirmBooking}>Confirm Booking</button>

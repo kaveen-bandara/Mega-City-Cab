@@ -21,50 +21,50 @@ import { ProtectedRoute, AdminRoute } from './services/guard';
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
+      <div className='app'>
         <Navbar />
-        <div className="content">
+        <div className='content'>
           <Routes>
             {/* Public Routes */}
-            <Route exact path="/home" element={<HomePage />} />
-            <Route exact path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/vehicles" element={<AllVehiclesPage />} />
-            <Route path="/find-booking" element={<FindBookingPage />} />
+            <Route exact path='/home' element={<HomePage />} />
+            <Route exact path='/login' element={<LoginPage />} />
+            <Route path='/register' element={<RegisterPage />} />
+            <Route path='/vehicles' element={<AllVehiclesPage />} />
+            <Route path='/find-booking' element={<FindBookingPage />} />
 
             {/* Protected Routes */}
-            <Route path="/vehicle-details-book/:vehicleId"
+            <Route path='/vehicle-details-book/:vehicleId'
               element={<ProtectedRoute element={<VehicleDetailsBookingPage />} />}
             />
-            <Route path="/profile"
+            <Route path='/profile'
               element={<ProtectedRoute element={<ProfilePage />} />}
             />
-            <Route path="/edit-profile"
+            <Route path='/edit-profile'
               element={<ProtectedRoute element={<EditProfilePage />} />}
             />
 
             {/* Admin Routes */}
-            <Route path="/admin"
+            <Route path='/admin'
               element={<AdminRoute element={<AdminPage />} />}
             />
-            <Route path="/admin/manage-vehicles"
+            <Route path='/admin/manage-vehicles'
               element={<AdminRoute element={<ManageVehiclePage />} />}
             />
-            <Route path="/admin/edit-vehicle/:vehicleId"
+            <Route path='/admin/edit-vehicle/:vehicleId'
               element={<AdminRoute element={<EditVehiclePage />} />}
             />
-            <Route path="/admin/add-vehicle"
+            <Route path='/admin/add-vehicle'
               element={<AdminRoute element={<AddVehiclePage />} />}
             />
-            <Route path="/admin/manage-bookings"
+            <Route path='/admin/manage-bookings'
               element={<AdminRoute element={<ManageBookingsPage />} />}
             />
-            <Route path="/admin/edit-booking/:bookingCode"
+            <Route path='/admin/edit-booking/:bookingCode'
               element={<AdminRoute element={<EditBookingPage />} />}
             />
 
             {/* Fallback Route */}
-            <Route path="*" element={<Navigate to="/login" />} />
+            <Route path='*' element={<Navigate to='/login' />} />
           </Routes>
         </div>
         <FooterComponents />

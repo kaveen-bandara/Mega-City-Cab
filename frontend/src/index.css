@@ -2,8 +2,22 @@
   margin: 0;
   font-family: Arial, sans-serif;
   color: #666;
-  /* box-sizing: border-box; */
   overflow-x: hidden;
+}
+
+html, body {
+  display: flex;
+  flex-direction: column;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  flex: 1;
 }
 
 .colors {
@@ -140,7 +154,6 @@ button[type="submit"]:hover {
   background-color: #444;
   padding: 20px;
   text-align: center;
-  position: fixed;
   bottom: 0;
   width: 100%;
   font-weight: 500;
@@ -169,16 +182,16 @@ button[type="submit"]:hover {
 }
 
 .header-banner {
-  /* background-image: url("../public/assets/images/hotel.webp"); */
   background-size: cover;
   background-position: center;
   position: relative;
   height: 80vh;
 }
 
-.header-banner {
+.header-image {
   position: relative;
-  height: 500px;
+  height: 99.3%;
+  width: 100%;
 }
 
 .header-banner h1 {
@@ -188,6 +201,7 @@ button[type="submit"]:hover {
 
 .header-banner h3 {
   color: #f8f3f3;
+  text-align: center;
   font-size: 30px;
 }
 
